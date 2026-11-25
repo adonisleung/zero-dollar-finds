@@ -180,6 +180,7 @@
   }
   /* ---------- 阔屏 / 横屏自适应：舞台式阔卡（专区一行四格、大字阶、事实两栏） ---------- */
   @media (min-width:720px){
+    .shell{max-width:1180px}
     .main{max-width:1060px;margin:0 auto;padding:0 28px 56px}
     .zones{grid-template-columns:repeat(4,1fr)}
     .deck{max-width:880px;margin-left:auto;margin-right:auto;height:min(600px,calc(100dvh - 330px));min-height:440px}
@@ -214,6 +215,13 @@
     .navbtn{min-height:44px}
     .zones{grid-template-columns:repeat(4,1fr)}
     footer{margin-top:24px}
+  }
+
+  /* ---------- 超宽桌面：放宽容器，填满大屏 ---------- */
+  @media (min-width:1400px){
+    .shell{max-width:1360px}
+    .main{max-width:1240px}
+    .deck{max-width:1020px}
   }
 </style>
 </head>
