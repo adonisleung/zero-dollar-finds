@@ -2,23 +2,176 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Zero Dollar Finds - 免费情报板</title>
 <style>
-body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:760px;margin:0 auto;padding:24px 16px;color:#222}
-h1{font-size:24px} .sub{color:#666;margin-top:-8px}
-.item{border:1px solid #ddd;border-radius:10px;padding:14px 16px;margin:14px 0}
-.item h2{font-size:18px;margin:0 0 6px} .meta{color:#888;font-size:13px}
-a{color:#0b5fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:system-ui,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0f0f12;color:#f5f5f7;-webkit-tap-highlight-color:transparent}
+  /* 顶栏 */
+  header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;pointer-events:none}
+  header .brand{font-size:17px;font-weight:800;letter-spacing:.3px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+  header .brand span{color:#ffd60a}
+  header .count{font-size:13px;color:#cfcfd6;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:4px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+  /* 卡片舞台 */
+  #deck{position:fixed;inset:0;overflow:hidden;touch-action:none}
+  .card{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 calc(96px + env(safe-area-inset-bottom));will-change:transform,opacity;transition:transform .38s cubic-bezier(.22,.9,.3,1),opacity .38s ease;cursor:grab;user-select:none;-webkit-user-select:none}
+  .card.dragging{transition:none;cursor:grabbing}
+  .card .bg{position:absolute;inset:0;background:linear-gradient(160deg,#2b2b6b,#7b2f8b 55%,#c2417a);z-index:0}
+  .card:nth-child(3n+2) .bg{background:linear-gradient(160deg,#0b3d2e,#0e7490 55%,#2563eb)}
+  .card:nth-child(3n+3) .bg{background:linear-gradient(160deg,#7c2d12,#b45309 55%,#ca8a04)}
+  .card .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 60% at 50% 0%,rgba(255,255,255,.22),transparent 60%)}
+  .card .inner{position:relative;z-index:1;padding:0 22px}
+  .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.5px;color:#111;background:#ffd60a;border-radius:999px;padding:5px 11px;margin-bottom:12px}
+  .card h2{font-size:32px;line-height:1.2;font-weight:800;margin-bottom:10px;text-wrap:balance}
+  .meta{font-size:13px;color:rgba(255,255,255,.82);margin-bottom:12px}
+  .desc{font-size:16px;line-height:1.65;color:rgba(255,255,255,.94);margin-bottom:18px}
+  .cta{display:inline-block;background:#fff;color:#111;font-weight:800;font-size:16px;text-decoration:none;padding:14px 22px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .cta:active{transform:scale(.97)}
+  .hint{margin-top:14px;font-size:12px;color:rgba(255,255,255,.65)}
+  /* 底部操作 */
+  footer{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;align-items:center;justify-content:center;gap:14px;padding:0 16px calc(16px + env(safe-area-inset-bottom));pointer-events:none}
+  footer button{pointer-events:auto;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.14);color:#fff;font-size:20px;backdrop-filter:blur(6px);cursor:pointer}
+  footer button:active{transform:scale(.94)}
+  #dots{display:flex;gap:6px;align-items:center}
+  #dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);display:block}
+  #dots i.on{background:#fff;width:18px;border-radius:99px}
+  .empty{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#999;padding:24px;text-align:center}
+  .empty h2{color:#eee}
 </style>
 </head>
 <body>
-<h1>💸 Zero Dollar Finds</h1>
-<p class="sub">已核验免费情报 · 免卡 · 香港可用 · 由若衡发布</p>
-<p>最新情报会陆续上架。精选会再经 Radar Push Bot 推去 Telegram 群。</p>
-<div id="list">
-<div class="item"><h2>Them's Fightin' Herds</h2><div class="meta">Epic · 免费游戏 · 2026-11-26</div><p>Epic 限免游戏，免费可领。</p><p><a href="https://store.epicgames.com/en-US/p/thems-fightin-herds">去领取 →</a></p></div>
-</div>
-<p class="meta">最后更新：2026-11-26 · Zero Dollar Finds</p>
+<header>
+  <div class="brand">💸 Zero Dollar <span>Finds</span></div>
+  <div class="count" id="count">1 / 1</div>
+</header>
+
+<main id="deck" aria-label="免费情报卡片"></main>
+
+<footer>
+  <button id="prev" aria-label="上一则">↑</button>
+  <div id="dots" aria-hidden="true"></div>
+  <button id="next" aria-label="下一则">↓</button>
+</footer>
+
+<script>
+/* ============ 情报数据：若衡加新料，只需往 DEALS 加一个对象 ============
+   { tag: "分类", title: "标题", meta: "来源 · 日期", desc: "一句话结论", link: "原文链接", cta: "按钮文字" }
+   ======================================================================= */
+const DEALS = [
+  { tag: "免费游戏", title: "Them's Fightin' Herds", meta: "Epic · 2026-11-26", desc: "Epic 限免游戏，免费可领。", link: "https://store.epicgames.com/en-US/p/thems-fightin-herds", cta: "去领取 →" },
+];
+
+const deck = document.getElementById('deck');
+const countEl = document.getElementById('count');
+const dotsEl = document.getElementById('dots');
+let idx = 0, cards = [], startY = null, startX = null, dy = 0, dx = 0, dragging = false;
+
+function el(tag, cls, text){ const n=document.createElement(tag); if(cls) n.className=cls; if(text!=null) n.textContent=text; return n; }
+
+function render(){
+  deck.innerHTML = '';
+  cards = [];
+  if(!DEALS.length){
+    const e = el('div','empty');
+    e.append(el('h2',null,'暂无情报'));
+    e.append(el('p',null,'最新核验情报会陆续上架。'));
+    deck.append(e);
+    countEl.textContent = '0 / 0'; dotsEl.innerHTML=''; return;
+  }
+  DEALS.forEach((d,i)=>{
+    const c = el('article','card');
+    c.append(el('div','bg'));
+    const inner = el('div','inner');
+    inner.append(el('span','tag', d.tag || '免费情报'));
+    inner.append(el('h2',null, d.title));
+    inner.append(el('div','meta', d.meta || ''));
+    inner.append(el('p','desc', d.desc || ''));
+    const a = el('a','cta', d.cta || '去领取 →');
+    a.href = d.link || '#'; a.target = '_blank'; a.rel = 'noopener';
+    inner.append(a);
+    inner.append(el('div','hint','↑ 上滑看下一则 · ↓ 下滑回上一则'));
+    c.append(inner);
+    c.addEventListener('pointerdown', onDown);
+    deck.append(c); cards.push(c);
+  });
+  dotsEl.innerHTML='';
+  DEALS.forEach((_,i)=>{ const d=document.createElement('i'); if(i===0) d.className='on'; dotsEl.append(d); });
+  layout(true);
+}
+
+function layout(instant){
+  cards.forEach((c,i)=>{
+    const off = i - idx;
+    if(off < 0){ c.style.transform='translateY(-110%) scale(.92)'; c.style.opacity='0'; c.style.pointerEvents='none'; c.style.zIndex='1'; }
+    else if(off === 0){ c.style.transform='translateY(0) scale(1)'; c.style.opacity='1'; c.style.pointerEvents='auto'; c.style.zIndex='10'; }
+    else if(off === 1){ c.style.transform='translateY(4.5%) scale(.94)'; c.style.opacity='.55'; c.style.pointerEvents='none'; c.style.zIndex='5'; }
+    else if(off === 2){ c.style.transform='translateY(8%) scale(.88)'; c.style.opacity='.3'; c.style.pointerEvents='none'; c.style.zIndex='2'; }
+    else { c.style.transform='translateY(12%) scale(.82)'; c.style.opacity='0'; c.style.pointerEvents='none'; c.style.zIndex='1'; }
+    c.style.transition = instant ? 'none' : '';
+  });
+  countEl.textContent = (idx+1) + ' / ' + DEALS.length;
+  [...dotsEl.children].forEach((d,i)=> d.classList.toggle('on', i===idx));
+}
+
+function go(n){
+  idx = Math.max(0, Math.min(DEALS.length-1, n));
+  layout(false);
+}
+function next(){ go(idx+1); }
+function prev(){ go(idx-1); }
+
+function onDown(e){
+  if(e.target.closest('a')) return; /* 点链接不触发拖卡 */
+  dragging = true; startY = e.clientY; startX = e.clientX; dy = 0; dx = 0;
+  const c = cards[idx];
+  c.classList.add('dragging');
+  c.setPointerCapture(e.pointerId);
+  c.addEventListener('pointermove', onMove);
+  c.addEventListener('pointerup', onUp, {once:true});
+  c.addEventListener('pointercancel', onUp, {once:true});
+}
+function onMove(e){
+  if(!dragging) return;
+  dy = e.clientY - startY; dx = e.clientX - startX;
+  const c = cards[idx];
+  /* 竖滑为主，横滑亦可 */
+  const useY = Math.abs(dy) >= Math.abs(dx);
+  const d = useY ? dy : dx;
+  c.style.transform = `translate${useY?'Y':'X'}(${d}px) scale(${1 - Math.min(Math.abs(d)/1200, .08)})`;
+  c.style.opacity = String(1 - Math.min(Math.abs(d)/600, .45));
+}
+function onUp(e){
+  dragging = false;
+  const c = cards[idx];
+  c.classList.remove('dragging');
+  c.removeEventListener('pointermove', onMove);
+  const useY = Math.abs(dy) >= Math.abs(dx);
+  const d = useY ? dy : dx;
+  const H = deck.clientHeight, W = deck.clientWidth;
+  const th = (useY ? H : W) * 0.16;
+  if(d < -th && idx < DEALS.length-1) next();
+  else if(d > th && idx > 0) prev();
+  else layout(false);
+  dy = 0; dx = 0;
+}
+
+document.getElementById('next').addEventListener('click', next);
+document.getElementById('prev').addEventListener('click', prev);
+window.addEventListener('keydown', e=>{
+  if(e.key==='ArrowDown' || e.key==='ArrowRight' || e.key==='PageDown' || e.key===' ') { e.preventDefault(); next(); }
+  if(e.key==='ArrowUp' || e.key==='ArrowLeft' || e.key==='PageUp') { e.preventDefault(); prev(); }
+});
+/* 滚轮：向下滚看下一则 */
+let wheelLock = false;
+window.addEventListener('wheel', e=>{
+  if(wheelLock || !DEALS.length) return;
+  if(Math.abs(e.deltaY) < 18) return;
+  wheelLock = true; setTimeout(()=> wheelLock=false, 420);
+  e.deltaY > 0 ? next() : prev();
+}, {passive:true});
+
+render();
+</script>
 </body>
 </html>
