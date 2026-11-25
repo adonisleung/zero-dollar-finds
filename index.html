@@ -224,13 +224,13 @@
     .deck{max-width:1020px}
   }
 
-  /* ---------- 横版平铺：唔堆叠，卡片网格平铺（信息量大） ---------- */
-  @media (orientation:landscape){
+  /* ---------- 平铺：只在小屏（<720px）堆叠；>=720px 一律网格平铺 ---------- */
+  @media (min-width:720px){
     .deck{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;height:auto!important;min-height:0!important;max-height:none!important}
     .dcard{position:relative!important;inset:auto!important;transform:none!important;opacity:1!important;display:flex!important}
     .deckbar,.decknav{display:none!important}
   }
-  @media (orientation:landscape) and (min-width:1400px){
+  @media (min-width:1400px){
     .deck{grid-template-columns:repeat(3,1fr)}
   }
 </style>
