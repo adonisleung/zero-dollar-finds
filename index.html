@@ -178,6 +178,20 @@
     .zones{grid-template-columns:repeat(4,1fr)}
     .ztile .zname{font-size:17px}
   }
+  /* ---------- 阔屏 / 横屏自适应：舞台式阔卡（专区一行四格、大字阶、事实两栏） ---------- */
+  @media (min-width:720px){
+    .main{max-width:1060px;margin:0 auto;padding:0 28px 56px}
+    .zones{grid-template-columns:repeat(4,1fr)}
+    .deck{max-width:880px;margin-left:auto;margin-right:auto;height:min(600px,calc(100dvh - 330px));min-height:440px}
+    .dcard{padding:30px 36px}
+    .idx{font-size:84px}
+    .dcard h2{font-size:38px}
+    .hook{font-size:18px;max-width:34em}
+    .facts{display:grid;grid-template-columns:1fr 1fr;column-gap:34px}
+    .fact dd{font-size:15.5px}
+    .cta{font-size:17px;padding:16px 26px}
+    .dcard.void .big,.dcard.end .big{font-size:42px}
+  }
 </style>
 </head>
 <body>
