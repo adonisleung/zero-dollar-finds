@@ -2,176 +2,681 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Zero Dollar Finds - 免费情报板</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero Dollar Finds — 零元情报 · 已核验免费情报板</title>
+<meta name="description" content="每条都经一手来源核实的免费情报：四大专区＋左侧日期栏，滑动日期有放大效果，点日子即达嗰日卡片。">
 <style>
+  :root{
+    --ink:#131313;
+    --body:#2e2e2e;
+    --muted:#757575;
+    --line:#e4e4e4;
+    --paper:#f4f4f2;
+    --card:#ffffff;
+    --accent:#ff4d00;         /* safety orange — 全站唯一强调色 */
+    --ok:#0a7d33;
+    --warn:#b25e00;
+    --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue','PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;overflow:hidden}
-  body{font-family:system-ui,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0f0f12;color:#f5f5f7;-webkit-tap-highlight-color:transparent}
-  /* 顶栏 */
-  header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;pointer-events:none}
-  header .brand{font-size:17px;font-weight:800;letter-spacing:.3px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
-  header .brand span{color:#ffd60a}
-  header .count{font-size:13px;color:#cfcfd6;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:4px 10px;border-radius:999px;backdrop-filter:blur(6px)}
-  /* 卡片舞台 */
-  #deck{position:fixed;inset:0;overflow:hidden;touch-action:none}
-  .card{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 calc(96px + env(safe-area-inset-bottom));will-change:transform,opacity;transition:transform .38s cubic-bezier(.22,.9,.3,1),opacity .38s ease;cursor:grab;user-select:none;-webkit-user-select:none}
-  .card.dragging{transition:none;cursor:grabbing}
-  .card .bg{position:absolute;inset:0;background:linear-gradient(160deg,#2b2b6b,#7b2f8b 55%,#c2417a);z-index:0}
-  .card:nth-child(3n+2) .bg{background:linear-gradient(160deg,#0b3d2e,#0e7490 55%,#2563eb)}
-  .card:nth-child(3n+3) .bg{background:linear-gradient(160deg,#7c2d12,#b45309 55%,#ca8a04)}
-  .card .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 60% at 50% 0%,rgba(255,255,255,.22),transparent 60%)}
-  .card .inner{position:relative;z-index:1;padding:0 22px}
-  .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.5px;color:#111;background:#ffd60a;border-radius:999px;padding:5px 11px;margin-bottom:12px}
-  .card h2{font-size:32px;line-height:1.2;font-weight:800;margin-bottom:10px;text-wrap:balance}
-  .meta{font-size:13px;color:rgba(255,255,255,.82);margin-bottom:12px}
-  .desc{font-size:16px;line-height:1.65;color:rgba(255,255,255,.94);margin-bottom:18px}
-  .cta{display:inline-block;background:#fff;color:#111;font-weight:800;font-size:16px;text-decoration:none;padding:14px 22px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
-  .cta:active{transform:scale(.97)}
-  .hint{margin-top:14px;font-size:12px;color:rgba(255,255,255,.65)}
-  /* 底部操作 */
-  footer{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;align-items:center;justify-content:center;gap:14px;padding:0 16px calc(16px + env(safe-area-inset-bottom));pointer-events:none}
-  footer button{pointer-events:auto;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.14);color:#fff;font-size:20px;backdrop-filter:blur(6px);cursor:pointer}
-  footer button:active{transform:scale(.94)}
-  #dots{display:flex;gap:6px;align-items:center}
-  #dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);display:block}
-  #dots i.on{background:#fff;width:18px;border-radius:99px}
-  .empty{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#999;padding:24px;text-align:center}
-  .empty h2{color:#eee}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:var(--sans);background:var(--paper);color:var(--body);line-height:1.6;
+       -webkit-font-smoothing:antialiased}
+
+  /* ---------- 整体：左日期栏 + 右内容 ---------- */
+  .shell{display:flex;max-width:680px;margin:0 auto;align-items:flex-start}
+  .main{flex:1;min-width:0;padding:0 12px 48px 10px}
+
+  /* ---------- 左侧竖向日期栏 ---------- */
+  .rail{flex:0 0 0;width:0;opacity:0;overflow:hidden;position:sticky;top:0;height:100dvh;
+    background:var(--ink);display:flex;flex-direction:column;z-index:30;
+    transition:width .3s ease,flex-basis .3s ease,opacity .25s ease}
+  .rail.open{flex-basis:58px;width:58px;opacity:1}
+  .rail-head{padding:12px 0 9px;text-align:center;border-bottom:1px solid #2c2c2c;min-width:58px}
+  .rail-month{font-size:17px;font-weight:800;color:#fff;line-height:1.15}
+  .rail-year{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:#9a9a9a;margin-top:2px}
+  .rail-nums{flex:1;overflow-y:auto;padding:8px 0 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch;min-width:58px}
+  .rail-nums::-webkit-scrollbar{display:none}
+  .dnum{display:block;width:100%;background:none;border:0;color:#8f8f8f;font-family:var(--sans);
+    font-size:16px;font-weight:600;line-height:1.2;padding:6px 0;cursor:pointer;position:relative;
+    transform-origin:center center;will-change:transform}
+  .dnum.has{color:#fff;font-weight:800}
+  .dnum.has::after{content:"";position:absolute;right:6px;top:50%;width:5px;height:5px;border-radius:50%;
+    background:var(--accent);transform:translateY(-50%)}
+  .dnum.today{color:var(--accent)}
+  .dnum.sel{background:var(--accent);color:#fff}
+  .dnum.sel::after{background:#fff}
+  .dnum:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+  .dnum.nope{animation:shake .28s ease 2}
+  .db-status{font-size:13px;color:var(--muted);margin-top:8px;min-height:20px}
+  .db-status b{color:var(--ink)}
+  .railtoggle{width:100%;margin-top:14px;min-height:50px;border:1px solid var(--ink);background:var(--card);
+    color:var(--ink);font-family:var(--sans);font-size:15px;font-weight:700;letter-spacing:.06em;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px}
+  .railtoggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- masthead（紧凑版） ---------- */
+  header{background:var(--ink);color:#f5f5f3;margin:14px 0 0;padding:10px 16px 12px;position:relative}
+  header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--accent)}
+  .h-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#bdbdbd}
+  .h-meta .dot{color:var(--accent)}
+  .h-row{display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;margin-top:8px}
+  h1{font-size:clamp(29px,9vw,40px);line-height:1.1;font-weight:800;color:#fff;letter-spacing:.01em;white-space:nowrap}
+  h1 .acc{color:var(--accent)}
+  .h-txt{min-width:170px;flex:1}
+  .tagline{font-size:14.5px;font-weight:700;color:#fff;line-height:1.4}
+  .promise{font-size:12px;color:#bdbdbd;margin-top:2px;line-height:1.55}
+
+  /* ---------- 专区导航 ---------- */
+  .zones{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .ztile{border:1px solid var(--ink);background:var(--card);padding:14px 14px 12px;cursor:pointer;
+    text-align:left;font-family:var(--sans);min-height:76px;position:relative}
+  .ztile .zname{font-size:19px;font-weight:800;color:var(--ink);line-height:1.25;display:block}
+  .ztile .zen{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px}
+  .ztile .zcount{position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .ztile[aria-pressed="true"]{background:var(--ink)}
+  .ztile[aria-pressed="true"] .zname{color:#fff}
+  .ztile[aria-pressed="true"] .zen{color:#bdbdbd}
+  .ztile[aria-pressed="true"] .zcount{color:var(--accent)}
+  .ztile.hot{border-color:var(--accent);box-shadow:4px 4px 0 rgba(255,77,0,.85)}
+  .ztile.hot .zname{color:var(--accent)}
+  .ztile.hot[aria-pressed="true"]{background:var(--accent)}
+  .ztile.hot[aria-pressed="true"] .zname{color:#fff}
+  .ztile.hot[aria-pressed="true"] .zen{color:#ffe3d6}
+  .ztile.hot[aria-pressed="true"] .zcount{color:#fff}
+  .ztile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .hint{font-size:12.5px;color:var(--muted);text-align:center;margin-top:12px;letter-spacing:.08em}
+
+  /* ---------- 专区 ---------- */
+  .zone{display:none;margin-top:14px}
+  .zone.active{display:block}
+  .zone-head{border-top:3px solid var(--ink);padding-top:14px}
+  .zone-head h3{font-size:clamp(26px,8vw,34px);font-weight:800;color:var(--ink);line-height:1.2}
+  .zone-head h3 .acc{color:var(--accent)}
+  .zone-sub{font-size:14.5px;color:var(--muted);margin-top:4px}
+  .deckbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 2px 0}
+  .counter{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink)}
+  .counter b{color:var(--accent)}
+  .dots{display:flex;gap:6px}
+  .dots i{width:22px;height:4px;background:#cfcfcf;display:block}
+  .dots i.on{background:var(--accent)}
+
+  /* ---------- 卡片堆 ---------- */
+  .deck{position:relative;height:min(70vh,600px);min-height:470px;margin-top:12px}
+  .dcard{position:absolute;inset:0;background:var(--card);border:1px solid var(--ink);
+    box-shadow:5px 5px 0 rgba(19,19,19,.9);padding:22px 22px 20px;overflow:hidden;
+    display:flex;flex-direction:column;will-change:transform;touch-action:pan-y;
+    transition:transform .38s cubic-bezier(.22,.9,.3,1),opacity .38s}
+  .dcard.behind-1{transform:translateY(16px) scale(.955)}
+  .dcard.behind-2{transform:translateY(32px) scale(.91)}
+  .dcard.gone-left{transform:translateX(-135%) rotate(-9deg)!important;opacity:0}
+  .dcard.gone-right{transform:translateX(135%) rotate(9deg)!important;opacity:0}
+  .dcard.dragging{transition:none;cursor:grabbing}
+  .dcard.top{cursor:grab}
+  @keyframes nudge{0%,100%{transform:translateX(0)}30%{transform:translateX(-13px) rotate(-1.1deg)}60%{transform:translateX(9px) rotate(.8deg)}}
+  .dcard.nudge{animation:nudge .9s ease .7s 1}
+  @keyframes flashring{0%{box-shadow:0 0 0 0 rgba(255,77,0,.85),5px 5px 0 rgba(19,19,19,.9)}100%{box-shadow:0 0 0 16px rgba(255,77,0,0),5px 5px 0 rgba(19,19,19,.9)}}
+  .dcard.flash{animation:flashring .8s ease-out 2}
+
+  .card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .badge{display:inline-flex;align-items:center;padding:5px 11px;border-radius:999px;
+    font-family:var(--sans);font-weight:700;font-size:12.5px}
+  .badge.ok{background:var(--ok);color:#fff}
+  .badge.hot{background:var(--accent);color:#fff}
+  .badge.partial{background:#fff3e0;color:var(--warn);border:1px solid var(--warn)}
+  .cls{border:1px solid var(--ink);padding:5px 11px;border-radius:999px;color:var(--ink);
+    font-family:var(--sans);font-weight:600;font-size:12.5px}
+  .src{width:100%;color:var(--muted);margin-top:2px}
+  .idx{font-size:clamp(52px,16vw,72px);font-weight:200;line-height:1;color:var(--ink);letter-spacing:-.03em;margin:12px 0 0}
+  .idx b{font-weight:800;color:var(--accent)}
+  .dcard h2{font-size:clamp(24px,7.4vw,30px);line-height:1.28;font-weight:800;color:var(--ink);margin:6px 0 8px}
+  .dcard h2 .acc{color:var(--accent)}
+  .hook{font-size:15.5px;line-height:1.65}
+  .facts{margin:14px 0 0;border-top:2px solid var(--ink)}
+  .fact{display:grid;grid-template-columns:56px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .fact dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--muted);padding-top:4px;text-transform:uppercase}
+  .fact dd{color:var(--ink);font-size:14.5px;font-weight:600;line-height:1.5}
+  .fact dd small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+  .spacer{flex:1}
+  .cta{display:block;text-align:center;background:var(--accent);color:#fff;font-weight:800;
+    font-size:16.5px;letter-spacing:.1em;padding:15px 20px;text-decoration:none;min-height:54px}
+  .cta:active{background:var(--ink)}
+  .origin{font-size:12.5px;color:var(--muted);margin-top:10px;text-align:center}
+  .origin a{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+  .dcard.void{align-items:center;justify-content:center;text-align:center;border-style:dashed;box-shadow:none}
+  .dcard.void .big{font-size:clamp(26px,8vw,34px);font-weight:800;color:var(--ink);line-height:1.35}
+  .dcard.void p{font-size:15px;line-height:1.8;margin-top:10px;color:var(--muted)}
+  .dcard.void .mono{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:18px}
+  .dcard.end{align-items:center;justify-content:center;text-align:center;background:var(--ink);color:#e8e8e8;border-color:var(--ink)}
+  .dcard.end .big{font-size:clamp(28px,9vw,38px);font-weight:800;color:#fff;line-height:1.3}
+  .dcard.end .big .acc{color:var(--accent)}
+  .dcard.end p{font-size:15px;line-height:1.8;margin-top:12px;color:#cfcfcf}
+  .dcard.end .mono{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#9a9a9a;margin-top:20px}
+
+  .decknav{display:flex;gap:10px;margin-top:38px}
+  .navbtn{flex:1;min-height:52px;font-size:15px;font-weight:700;letter-spacing:.12em;cursor:pointer;
+    border:1px solid var(--ink);background:var(--card);color:var(--ink);font-family:var(--sans)}
+  .navbtn.primary{background:var(--ink);color:#fff}
+  .navbtn:disabled{opacity:.32;cursor:default}
+  .navbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:40px;background:var(--ink);color:#d8d8d8;padding:24px 20px 20px}
+  footer h3{font-family:var(--mono);font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#fff;margin:16px 0 7px}
+  footer h3:first-child{margin-top:0}
+  footer h3 .dot{color:var(--accent)}
+  footer p{font-size:14px;line-height:1.75}
+  .colophon{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:#9a9a9a;border-top:1px solid #333;margin-top:20px;padding-top:13px}
+  @media (min-width:640px){
+    .main{padding:0 20px 64px 14px}
+    .deck{height:580px}
+    .zones{grid-template-columns:repeat(4,1fr)}
+    .ztile .zname{font-size:17px}
+  }
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">💸 Zero Dollar <span>Finds</span></div>
-  <div class="count" id="count">1 / 1</div>
-</header>
+<div class="shell">
 
-<main id="deck" aria-label="免费情报卡片"></main>
+  <!-- 左侧日期栏：JS 按当月日数生成，滑动有 Dock 放大效果 -->
+  <aside class="rail" id="rail" aria-label="日期">
+    <div class="rail-head">
+      <div class="rail-month" id="railMonth">11月</div>
+      <div class="rail-year" id="railYear">2026</div>
+    </div>
+    <div class="rail-nums" id="railNums"></div>
+  </aside>
 
-<footer>
-  <button id="prev" aria-label="上一则">↑</button>
-  <div id="dots" aria-hidden="true"></div>
-  <button id="next" aria-label="下一则">↓</button>
-</footer>
+  <div class="main">
 
+    <header>
+      <div class="h-meta">
+        <span>Zero Dollar Finds <span class="dot">●</span> 免费情报板</span>
+        <span>Vol. 001</span>
+      </div>
+      <div class="h-row">
+        <h1>零元情报<span class="acc">.</span></h1>
+        <div class="h-txt">
+          <p class="tagline">每条都核实过，先至上架。</p>
+          <p class="promise">免绑卡、真免费；数字要有官方出处，地区同门槛逐条写明。</p>
+        </div>
+      </div>
+    </header>
+
+    <button class="railtoggle" id="railToggle" aria-expanded="false">
+      <span id="rtLabel">📅 查看日期</span>
+    </button>
+    <p class="db-status" id="dbStatus"></p>
+
+    <nav class="zones" aria-label="专区">
+      <button class="ztile hot" data-zone="hot" aria-pressed="true">
+        <span class="zcount">1 则</span>
+        <span class="zname">🔥 错过哭死</span>
+        <span class="zen">Must Not Miss</span>
+      </button>
+      <button class="ztile" data-zone="games" aria-pressed="false">
+        <span class="zcount">1 则</span>
+        <span class="zname">🎮 游戏专区</span>
+        <span class="zen">Games</span>
+      </button>
+      <button class="ztile" data-zone="deals" aria-pressed="false">
+        <span class="zcount">0 则</span>
+        <span class="zname">🧶 羊毛专区</span>
+        <span class="zen">Freebies</span>
+      </button>
+      <button class="ztile" data-zone="ai" aria-pressed="false">
+        <span class="zcount">0 则</span>
+        <span class="zname">🤖 AI 资讯</span>
+        <span class="zen">AI News</span>
+      </button>
+    </nav>
+    <p class="hint">左滑下一则 · 右滑返去旧则（可跨日）· 㩒「查看日期」拣日子，选完条栏自动收起</p>
+
+    <!-- ============ 专区：错过哭死 ============ -->
+    <section class="zone active" id="zone-hot" data-zname="错过哭死">
+      <div class="zone-head">
+        <h3>🔥 错过<span class="acc">哭死</span></h3>
+        <p class="zone-sub">全站最劲嗰几则——限时、手慢无，唔睇真系会后悔。</p>
+      </div>
+      <div class="deckbar">
+        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">2</span> 则</span>
+        <span class="dots"></span>
+      </div>
+      <div class="deck">
+        <article class="dcard" data-cls="b" data-date="2026-11-26">
+          <div class="card-top">
+            <span class="badge hot">🔥 本期精选</span>
+            <span class="badge ok">✅ 已核实</span>
+            <span class="src">Epic Games · 2026-11-26</span>
+          </div>
+          <div class="idx">N<b>o.</b>001</div>
+          <h2>Epic 限免｜<span class="acc">Them's Fightin' Herds</span> 免费入库</h2>
+          <p class="hook">Epic 商店限时免费游戏，而家登录账号就领到，入库之后永久保留，唔使绑卡、唔使俾一蚊。限免过咗就要俾钱买返，系今期最唔应该错过嗰则。</p>
+          <dl class="facts">
+            <div class="fact"><dt>费用</dt><dd>完全免费领取</dd></div>
+            <div class="fact"><dt>门槛</dt><dd>只需 Epic 账号<small>免绑卡，注册几分钟搞掂</small></dd></div>
+            <div class="fact"><dt>地区</dt><dd>跟账号地区政策<small>页面开到即领到</small></dd></div>
+            <div class="fact"><dt>截止</dt><dd>限时活动<small>确切截止以官方商店页为准</small></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://store.epicgames.com/en-US/p/thems-fightin-herds" rel="noopener">去领取 →</a>
+          <p class="origin">一手来源：<a href="https://store.epicgames.com/en-US/p/thems-fightin-herds" rel="noopener">Epic 官方商店页</a></p>
+        </article>
+        <article class="dcard end">
+          <div>
+            <p class="big">本区今轮睇完<span class="acc">。</span></p>
+            <p>有更劲嘅限时料核实好<br>会即刻补入嚟</p>
+            <p class="mono">Stay tuned</p>
+          </div>
+        </article>
+      </div>
+      <div class="decknav">
+        <button class="navbtn prevBtn" disabled>← 上一则</button>
+        <button class="navbtn primary nextBtn">下一则 →</button>
+      </div>
+    </section>
+
+    <!-- ============ 专区：游戏 ============ -->
+    <section class="zone" id="zone-games" data-zname="游戏专区">
+      <div class="zone-head">
+        <h3>🎮 游戏<span class="acc">专区</span></h3>
+        <p class="zone-sub">限免游戏，领咗入库永久保留——白嫖一部少一部。</p>
+      </div>
+      <div class="deckbar">
+        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">2</span> 则</span>
+        <span class="dots"></span>
+      </div>
+      <div class="deck">
+        <!-- CARDS(games): 新卡加喺第一张位置，并写 data-date="YYYY-MM-DD" -->
+        <article class="dcard" data-cls="b" data-date="2026-11-26">
+          <div class="card-top">
+            <span class="badge ok">✅ 已核实</span>
+            <span class="cls">🔗 乙类 · 有得拎</span>
+            <span class="src">Epic Games · 2026-11-26</span>
+          </div>
+          <div class="idx">N<b>o.</b>001</div>
+          <h2>Epic 限免｜<span class="acc">Them's Fightin' Herds</span> 免费入库</h2>
+          <p class="hook">Epic 商店限时免费游戏，而家登录账号就领到，入库之后永久保留，唔使绑卡、唔使俾一蚊。</p>
+          <dl class="facts">
+            <div class="fact"><dt>费用</dt><dd>完全免费领取</dd></div>
+            <div class="fact"><dt>门槛</dt><dd>只需 Epic 账号<small>免绑卡，注册几分钟搞掂</small></dd></div>
+            <div class="fact"><dt>地区</dt><dd>跟账号地区政策<small>页面开到即领到</small></dd></div>
+            <div class="fact"><dt>截止</dt><dd>限时活动<small>确切截止以官方商店页为准</small></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://store.epicgames.com/en-US/p/thems-fightin-herds" rel="noopener">去领取 →</a>
+          <p class="origin">一手来源：<a href="https://store.epicgames.com/en-US/p/thems-fightin-herds" rel="noopener">Epic 官方商店页</a></p>
+        </article>
+        <article class="dcard end">
+          <div>
+            <p class="big">本区今轮睇完<span class="acc">。</span></p>
+            <p>雷达每日扫 Epic、Steam 等平台<br>有限免核实好即刻上架</p>
+            <p class="mono">Radar scanning</p>
+          </div>
+        </article>
+      </div>
+      <div class="decknav">
+        <button class="navbtn prevBtn" disabled>← 上一则</button>
+        <button class="navbtn primary nextBtn">下一则 →</button>
+      </div>
+    </section>
+
+    <!-- ============ 专区：羊毛 ============ -->
+    <section class="zone" id="zone-deals" data-zname="羊毛专区">
+      <div class="zone-head">
+        <h3>🧶 羊毛<span class="acc">专区</span></h3>
+        <p class="zone-sub">免费额度、零元资源、真金白银嘅着数——核实过先上架。</p>
+      </div>
+      <div class="deckbar">
+        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">1</span> 则</span>
+        <span class="dots"></span>
+      </div>
+      <div class="deck">
+        <!-- CARDS(deals): 新卡加喺第一张位置并写 data-date，占位卡之后可以抽走 -->
+        <article class="dcard void">
+          <div>
+            <p class="big">雷达扫描中<br>暂未有新料上架</p>
+            <p>呢个区只放核实过嘅羊毛：<br>免绑卡、真免费先有资格出现</p>
+            <p class="mono">Nothing verified yet</p>
+          </div>
+        </article>
+      </div>
+      <div class="decknav">
+        <button class="navbtn prevBtn" disabled>← 上一则</button>
+        <button class="navbtn primary nextBtn" disabled>下一则 →</button>
+      </div>
+    </section>
+
+    <!-- ============ 专区：AI 资讯 ============ -->
+    <section class="zone" id="zone-ai" data-zname="AI 资讯">
+      <div class="zone-head">
+        <h3>🤖 AI <span class="acc">资讯</span></h3>
+        <p class="zone-sub">模型同工具嘅新动向——纯资讯，睇完就算跟上。</p>
+      </div>
+      <div class="deckbar">
+        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">1</span> 则</span>
+        <span class="dots"></span>
+      </div>
+      <div class="deck">
+        <!-- CARDS(ai): 新卡加喺第一张位置并写 data-date，占位卡之后可以抽走 -->
+        <article class="dcard void">
+          <div>
+            <p class="big">雷达扫描中<br>暂未有新料上架</p>
+            <p>新模型、新工具一有动向<br>核实来源同时间线之后即刻上架</p>
+            <p class="mono">Nothing verified yet</p>
+          </div>
+        </article>
+      </div>
+      <div class="decknav">
+        <button class="navbtn prevBtn" disabled>← 上一则</button>
+        <button class="navbtn primary nextBtn" disabled>下一则 →</button>
+      </div>
+    </section>
+
+    <footer>
+      <h3>核验标准 <span class="dot">●</span></h3>
+      <p>每条情报过三关先发布：① 免绑卡 ② 真免费或真收益（PayPal 收款优先）③ 一手来源可查。地区限制唔会一刀切否决，只会逐条标注清楚。</p>
+      <h3>点样运作 <span class="dot">●</span></h3>
+      <p>雷达系统全天候收集 → 若衡逐条核验包装 → 全部成品上架呢度归档，精选再经 Radar Push Bot 推送去 Telegram 群组。</p>
+      <p class="colophon">最后更新：2026-11-26 · Zero Dollar Finds · 由若衡核验发布</p>
+    </footer>
+
+  </div>
+</div>
 <script>
-/* ============ 情报数据：若衡加新料，只需往 DEALS 加一个对象 ============
-   { tag: "分类", title: "标题", meta: "来源 · 日期", desc: "一句话结论", link: "原文链接", cta: "按钮文字" }
-   ======================================================================= */
-const DEALS = [
-  { tag: "免费游戏", title: "Them's Fightin' Herds", meta: "Epic · 2026-11-26", desc: "Epic 限免游戏，免费可领。", link: "https://store.epicgames.com/en-US/p/thems-fightin-herds", cta: "去领取 →" },
-];
+  (function () {
+    var decks = {};   // zoneId -> { goTo(i), cards }
 
-const deck = document.getElementById('deck');
-const countEl = document.getElementById('count');
-const dotsEl = document.getElementById('dots');
-let idx = 0, cards = [], startY = null, startX = null, dy = 0, dx = 0, dragging = false;
+    /* ---------- 专区切换 ---------- */
+    var tiles = document.querySelectorAll('.ztile');
+    function activateZone(zoneId, scrollTop) {
+      tiles.forEach(function (t) {
+        t.setAttribute('aria-pressed', t.getAttribute('data-zone') === zoneId ? 'true' : 'false');
+      });
+      document.querySelectorAll('.zone').forEach(function (z) { z.classList.remove('active'); });
+      var target = document.getElementById('zone-' + zoneId);
+      if (target) target.classList.add('active');
+      if (decks[zoneId] && decks[zoneId].resetHome) decks[zoneId].resetHome();
+      if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+      return target;
+    }
+    tiles.forEach(function (tile) {
+      tile.addEventListener('click', function () { activateZone(tile.getAttribute('data-zone'), true); });
+    });
 
-function el(tag, cls, text){ const n=document.createElement(tag); if(cls) n.className=cls; if(text!=null) n.textContent=text; return n; }
+    /* ---------- 每个专区各自一个卡片堆 ---------- */
+    document.querySelectorAll('.zone').forEach(function (zone) {
+      var deck = zone.querySelector('.deck');
+      var cards = Array.prototype.slice.call(deck.querySelectorAll('.dcard'));
+      /* 时间长流排序：按日期升序（同日之内 DOM 越后越旧，因为新卡加喺最前），
+         结尾卡跟喺最尾；开页停喺今日第一则（无今日卡就停喺最近一日第一则） */
+      function pad2(n) { return (n < 10 ? '0' : '') + n; }
+      var _nw = new Date();
+      var _today = _nw.getFullYear() + '-' + pad2(_nw.getMonth() + 1) + '-' + pad2(_nw.getDate());
+      var _dated = cards.filter(function (c) { return c.hasAttribute('data-date'); });
+      var _tail = cards.filter(function (c) { return !c.hasAttribute('data-date'); });
+      cards = _dated.slice().sort(function (a, b) {
+        var da = a.getAttribute('data-date'), db = b.getAttribute('data-date');
+        if (da !== db) return da < db ? -1 : 1;
+        return cards.indexOf(b) - cards.indexOf(a);
+      }).concat(_tail);
+      var homeIdx = 0;
+      (function () {
+        var i, latest = null;
+        for (i = 0; i < cards.length; i++) {
+          var d = cards[i].getAttribute('data-date');
+          if (d && (latest === null || d > latest)) latest = d;
+        }
+        var hasToday = _dated.some(function (c) { return c.getAttribute('data-date') === _today; });
+        var target = hasToday ? _today : latest;
+        if (target) for (i = 0; i < cards.length; i++) {
+          if (cards[i].getAttribute('data-date') === target) { homeIdx = i; break; }
+        }
+      })();
+      var cur = zone.querySelector('.cur');
+      var total = zone.querySelector('.total');
+      var dotsBox = zone.querySelector('.dots');
+      var prevBtn = zone.querySelector('.prevBtn');
+      var nextBtn = zone.querySelector('.nextBtn');
+      total.textContent = cards.length;
+      var idx = homeIdx;
 
-function render(){
-  deck.innerHTML = '';
-  cards = [];
-  if(!DEALS.length){
-    const e = el('div','empty');
-    e.append(el('h2',null,'暂无情报'));
-    e.append(el('p',null,'最新核验情报会陆续上架。'));
-    deck.append(e);
-    countEl.textContent = '0 / 0'; dotsEl.innerHTML=''; return;
-  }
-  DEALS.forEach((d,i)=>{
-    const c = el('article','card');
-    c.append(el('div','bg'));
-    const inner = el('div','inner');
-    inner.append(el('span','tag', d.tag || '免费情报'));
-    inner.append(el('h2',null, d.title));
-    inner.append(el('div','meta', d.meta || ''));
-    inner.append(el('p','desc', d.desc || ''));
-    const a = el('a','cta', d.cta || '去领取 →');
-    a.href = d.link || '#'; a.target = '_blank'; a.rel = 'noopener';
-    inner.append(a);
-    inner.append(el('div','hint','↑ 上滑看下一则 · ↓ 下滑回上一则'));
-    c.append(inner);
-    c.addEventListener('pointerdown', onDown);
-    deck.append(c); cards.push(c);
-  });
-  dotsEl.innerHTML='';
-  DEALS.forEach((_,i)=>{ const d=document.createElement('i'); if(i===0) d.className='on'; dotsEl.append(d); });
-  layout(true);
-}
+      cards.forEach(function (_, i) {
+        var d = document.createElement('i');
+        if (i === 0) d.className = 'on';
+        dotsBox.appendChild(d);
+      });
+      var dots = dotsBox.querySelectorAll('i');
 
-function layout(instant){
-  cards.forEach((c,i)=>{
-    const off = i - idx;
-    if(off < 0){ c.style.transform='translateY(-110%) scale(.92)'; c.style.opacity='0'; c.style.pointerEvents='none'; c.style.zIndex='1'; }
-    else if(off === 0){ c.style.transform='translateY(0) scale(1)'; c.style.opacity='1'; c.style.pointerEvents='auto'; c.style.zIndex='10'; }
-    else if(off === 1){ c.style.transform='translateY(4.5%) scale(.94)'; c.style.opacity='.55'; c.style.pointerEvents='none'; c.style.zIndex='5'; }
-    else if(off === 2){ c.style.transform='translateY(8%) scale(.88)'; c.style.opacity='.3'; c.style.pointerEvents='none'; c.style.zIndex='2'; }
-    else { c.style.transform='translateY(12%) scale(.82)'; c.style.opacity='0'; c.style.pointerEvents='none'; c.style.zIndex='1'; }
-    c.style.transition = instant ? 'none' : '';
-  });
-  countEl.textContent = (idx+1) + ' / ' + DEALS.length;
-  [...dotsEl.children].forEach((d,i)=> d.classList.toggle('on', i===idx));
-}
+      function layout() {
+        cards.forEach(function (card, i) {
+          card.classList.remove('behind-1', 'behind-2', 'top', 'gone-left', 'gone-right');
+          card.style.zIndex = String(cards.length - i);
+          card.style.pointerEvents = i < idx ? 'none' : '';
+          if (i === idx) { card.classList.add('top'); card.style.opacity = ''; }
+          else if (i === idx + 1) { card.classList.add('behind-1'); card.style.opacity = ''; }
+          else if (i === idx + 2) { card.classList.add('behind-2'); card.style.opacity = ''; }
+          else if (i > idx + 2) { card.classList.add('behind-2'); card.style.opacity = '0'; }
+          if (i < idx) card.classList.add('gone-left');
+        });
+        cur.textContent = Math.min(idx + 1, cards.length);
+        dots.forEach(function (d, i) { d.className = i === idx ? 'on' : ''; });
+        prevBtn.disabled = idx === 0;
+        nextBtn.disabled = idx >= cards.length - 1;
+      }
+      function next() { if (idx < cards.length - 1) { idx++; layout(); } }
+      function prev() { if (idx > 0) { idx--; layout(); } }
+      nextBtn.addEventListener('click', next);
+      prevBtn.addEventListener('click', prev);
 
-function go(n){
-  idx = Math.max(0, Math.min(DEALS.length-1, n));
-  layout(false);
-}
-function next(){ go(idx+1); }
-function prev(){ go(idx-1); }
+      var zoneId = zone.id.replace('zone-', '');
+      decks[zoneId] = {
+        cards: cards,
+        goTo: function (i) { idx = Math.max(0, Math.min(i, cards.length - 1)); layout(); },
+        resetHome: function () { idx = homeIdx; layout(); }
+      };
 
-function onDown(e){
-  if(e.target.closest('a')) return; /* 点链接不触发拖卡 */
-  dragging = true; startY = e.clientY; startX = e.clientX; dy = 0; dx = 0;
-  const c = cards[idx];
-  c.classList.add('dragging');
-  c.setPointerCapture(e.pointerId);
-  c.addEventListener('pointermove', onMove);
-  c.addEventListener('pointerup', onUp, {once:true});
-  c.addEventListener('pointercancel', onUp, {once:true});
-}
-function onMove(e){
-  if(!dragging) return;
-  dy = e.clientY - startY; dx = e.clientX - startX;
-  const c = cards[idx];
-  /* 竖滑为主，横滑亦可 */
-  const useY = Math.abs(dy) >= Math.abs(dx);
-  const d = useY ? dy : dx;
-  c.style.transform = `translate${useY?'Y':'X'}(${d}px) scale(${1 - Math.min(Math.abs(d)/1200, .08)})`;
-  c.style.opacity = String(1 - Math.min(Math.abs(d)/600, .45));
-}
-function onUp(e){
-  dragging = false;
-  const c = cards[idx];
-  c.classList.remove('dragging');
-  c.removeEventListener('pointermove', onMove);
-  const useY = Math.abs(dy) >= Math.abs(dx);
-  const d = useY ? dy : dx;
-  const H = deck.clientHeight, W = deck.clientWidth;
-  const th = (useY ? H : W) * 0.16;
-  if(d < -th && idx < DEALS.length-1) next();
-  else if(d > th && idx > 0) prev();
-  else layout(false);
-  dy = 0; dx = 0;
-}
+      /* 防误触滑动：链接/按钮起点唔启动；纵向意图（碌页面）即刻取消；
+         翻页门槛：距离 ≥90px，或 ≥35px 且速度 ≥0.45px/ms（快 flick）；上下页按钮常驻后备 */
+      var drag = null;
+      deck.addEventListener('pointerdown', function (e) {
+        var top = cards[idx];
+        if (!top || e.target.closest('a,button')) return;
+        drag = { x0: e.clientX, y0: e.clientY, locked: false,
+                 samples: [{ x: e.clientX, t: performance.now() }] };
+        top.classList.remove('nudge');
+        if (top.setPointerCapture) { try { top.setPointerCapture(e.pointerId); } catch (err) {} }
+      });
+      deck.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var top = cards[idx];
+        var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+        if (!drag.locked) {
+          if (Math.abs(dy) > 14 && Math.abs(dy) > Math.abs(dx)) {
+            drag = null; top.style.transform = ''; layout(); return;
+          }
+          if (Math.abs(dx) > 12) { drag.locked = true; top.classList.add('dragging'); }
+          else return;
+        }
+        drag.samples.push({ x: e.clientX, t: performance.now() });
+        if (drag.samples.length > 10) drag.samples.shift();
+        top.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 16) + 'deg)';
+      });
+      function endDrag(e) {
+        if (!drag) return;
+        var top = cards[idx];
+        var dx = (typeof e.clientX === 'number') ? e.clientX - drag.x0 : 0;
+        var nowT = performance.now();
+        var s = drag.samples.concat([{ x: (typeof e.clientX === 'number') ? e.clientX : drag.x0, t: nowT }])
+          .filter(function (sm) { return nowT - sm.t <= 100; });
+        var v = 0;
+        if (s.length >= 2) v = (s[s.length - 1].x - s[0].x) / Math.max(1, s[s.length - 1].t - s[0].t);
+        var wasLocked = drag.locked;
+        drag = null;
+        top.classList.remove('dragging');
+        top.style.transform = '';
+        if (wasLocked && (Math.abs(dx) >= 90 || (Math.abs(dx) >= 35 && Math.abs(v) >= 0.45))) {
+          if (dx < 0) next(); else prev();
+        } else layout();
+      }
+      deck.addEventListener('pointerup', endDrag);
+      deck.addEventListener('pointercancel', function () {
+        if (!drag) return;
+        drag = null;
+        var top = cards[idx];
+        if (top) { top.classList.remove('dragging'); top.style.transform = ''; }
+        layout();
+      });
 
-document.getElementById('next').addEventListener('click', next);
-document.getElementById('prev').addEventListener('click', prev);
-window.addEventListener('keydown', e=>{
-  if(e.key==='ArrowDown' || e.key==='ArrowRight' || e.key==='PageDown' || e.key===' ') { e.preventDefault(); next(); }
-  if(e.key==='ArrowUp' || e.key==='ArrowLeft' || e.key==='PageUp') { e.preventDefault(); prev(); }
-});
-/* 滚轮：向下滚看下一则 */
-let wheelLock = false;
-window.addEventListener('wheel', e=>{
-  if(wheelLock || !DEALS.length) return;
-  if(Math.abs(e.deltaY) < 18) return;
-  wheelLock = true; setTimeout(()=> wheelLock=false, 420);
-  e.deltaY > 0 ? next() : prev();
-}, {passive:true});
+      layout();
+      if (zone.classList.contains('active') && cards[idx]) cards[idx].classList.add('nudge');
+    });
 
-render();
+    /* ---------- 日期索引：扫全部卡片的 data-date ---------- */
+    var dbStatus = document.getElementById('dbStatus');
+    var byDate = {};
+    document.querySelectorAll('.zone').forEach(function (zone) {
+      var zoneId = zone.id.replace('zone-', '');
+      var zoneName = zone.getAttribute('data-zname') || zoneId;
+      decks[zoneId].cards.forEach(function (card, i) {
+        var d = card.getAttribute('data-date');
+        if (!d) return;
+        (byDate[d] = byDate[d] || []).push({ zoneId: zoneId, zoneName: zoneName, cardIdx: i, el: card });
+      });
+    });
+
+    function jumpToDate(d, label) {
+      var hits = byDate[d];
+      if (!hits || !hits.length) {
+        dbStatus.innerHTML = '📅 <b>' + label + '</b> 暂未有已核实卡片上架，雷达扫描到即刻补上。';
+        return;
+      }
+      var activeEl = document.querySelector('.zone.active');
+      var activeZoneId = activeEl ? activeEl.id.replace('zone-', '') : null;
+      var first = hits.filter(function (h) { return h.zoneId === activeZoneId; })[0] || hits[0];
+      activateZone(first.zoneId, false);
+      decks[first.zoneId].goTo(first.cardIdx);
+      var deckEl = document.querySelector('#zone-' + first.zoneId + ' .deck');
+      if (deckEl) deckEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      first.el.classList.remove('flash');
+      void first.el.offsetWidth;
+      first.el.classList.add('flash');
+      var zonesTxt = hits.map(function (h) { return h.zoneName; })
+        .filter(function (v, i, a) { return a.indexOf(v) === i; }).join('、');
+      dbStatus.innerHTML = '📅 <b>' + label + '</b> 共 ' + hits.length +
+        ' 张卡，分布喺 ' + zonesTxt + '，已定位去第一张。';
+    }
+
+    /* ---------- 左侧日期栏：当月日子 + Dock 放大 ---------- */
+    var railNums = document.getElementById('railNums');
+    /* 日期栏开合：平时隐藏，㩒掣打开（Dock 放大保留），再㩒收起 */
+    var railEl = document.getElementById('rail');
+    var railToggle = document.getElementById('railToggle');
+    var rtLabel = document.getElementById('rtLabel');
+    var railOpen = false;
+    function setRail(open) {
+      railOpen = open;
+      railEl.classList.toggle('open', open);
+      railToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      rtLabel.textContent = open ? '✕ 收起日期栏' : '📅 查看日期';
+      if (open) {
+        var sel = railNums.querySelector('.dnum.sel') || railNums.querySelector('.dnum.today');
+        if (sel) railNums.scrollTop = Math.max(0, sel.offsetTop - railNums.clientHeight / 2);
+      }
+    }
+    railToggle.addEventListener('click', function () { setRail(!railOpen); });
+    var now = new Date();
+    var Y = now.getFullYear(), M = now.getMonth();
+    var daysInMonth = new Date(Y, M + 1, 0).getDate();
+    document.getElementById('railMonth').textContent = (M + 1) + '月';
+    document.getElementById('railYear').textContent = Y;
+    function p2(n) { return (n < 10 ? '0' : '') + n; }
+    var todayStr = Y + '-' + p2(M + 1) + '-' + p2(now.getDate());
+    var weekNames = ['日', '一', '二', '三', '四', '五', '六'];
+    var numEls = [];
+
+    for (var day = 1; day <= daysInMonth; day++) {
+      (function (day) {
+        var ds = Y + '-' + p2(M + 1) + '-' + p2(day);
+        var el = document.createElement('button');
+        el.className = 'dnum' + (byDate[ds] ? ' has' : '') + (ds === todayStr ? ' today' : '');
+        el.textContent = day;
+        el.setAttribute('data-date', ds);
+        el.addEventListener('click', function () {
+          if (suppressClick) return;
+          railNums.querySelectorAll('.dnum').forEach(function (n) { n.classList.remove('sel'); });
+          if (byDate[ds]) {
+            el.classList.add('sel');
+            var dt = new Date(Y, M, day);
+            var rel = ds === todayStr ? '今天' : '周' + weekNames[dt.getDay()];
+            jumpToDate(ds, (M + 1) + '月' + day + '日（' + rel + '）');
+          } else {
+            el.classList.remove('nope'); void el.offsetWidth; el.classList.add('nope');
+            jumpToDate(ds, (M + 1) + '月' + day + '日');
+          }
+          setRail(false);   /* 选完日期自动隐藏日期栏 */
+        });
+        railNums.appendChild(el);
+        numEls.push(el);
+      })(day);
+    }
+    /* 开页自动碌去今日附近 */
+    var todayEl = railNums.querySelector('.dnum.today');
+    if (todayEl) railNums.scrollTop = Math.max(0, todayEl.offsetTop - railNums.clientHeight / 2);
+
+    /* Dock 放大：手指/鼠标碌过时，按距离逐个放大（余弦衰减，最大约 2 倍） */
+    var lastY = null, rafPending = false, suppressClick = false, downY = null, moved = 0;
+    function applyMag() {
+      rafPending = false;
+      if (lastY === null) return;
+      var boxTop = railNums.getBoundingClientRect().top;
+      var contentY = lastY - boxTop + railNums.scrollTop;
+      var R = 115;
+      numEls.forEach(function (el) {
+        var center = el.offsetTop + el.offsetHeight / 2;
+        var dist = Math.abs(contentY - center);
+        var s = 1;
+        if (dist < R) s = 1 + 1.0 * (0.5 + 0.5 * Math.cos(Math.PI * dist / R));
+        el.style.transform = 'scale(' + s.toFixed(3) + ')';
+        el.style.zIndex = String(Math.round(s * 10));
+        el.style.color = dist < 20 && !el.classList.contains('sel') ? 'var(--accent)' : '';
+      });
+    }
+    function queueMag() { if (!rafPending) { rafPending = true; requestAnimationFrame(applyMag); } }
+    function resetMag() {
+      lastY = null;
+      numEls.forEach(function (el) {
+        el.style.transition = 'transform .25s ease';
+        el.style.transform = '';
+        el.style.color = '';
+        setTimeout(function () { el.style.transition = ''; }, 260);
+      });
+    }
+    railNums.addEventListener('pointermove', function (e) {
+      lastY = e.clientY;
+      if (downY !== null) moved = Math.max(moved, Math.abs(e.clientY - downY));
+      queueMag();
+    });
+    railNums.addEventListener('touchmove', function (e) {
+      if (e.touches && e.touches[0]) { lastY = e.touches[0].clientY; queueMag(); }
+    }, { passive: true });
+    railNums.addEventListener('pointerdown', function (e) {
+      downY = e.clientY; moved = 0; lastY = e.clientY; queueMag();
+    });
+    railNums.addEventListener('pointerup', function () {
+      suppressClick = moved > 10;
+      downY = null;
+      setTimeout(function () { suppressClick = false; }, 60);
+      setTimeout(resetMag, 120);
+    });
+    railNums.addEventListener('pointerleave', resetMag);
+    railNums.addEventListener('scroll', function () { if (lastY !== null) queueMag(); }, { passive: true });
+  })();
 </script>
 </body>
 </html>
