@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-lang="zh">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -233,6 +233,14 @@
   @media (min-width:1400px){
     .deck{grid-template-columns:repeat(3,1fr)}
   }
+
+  /* ---------- 中英切换（2026-11-26）：.lz 中文 / .le English，按 html[data-lang] 显示 ---------- */
+  [data-lang="zh"] .le{display:none!important}
+  [data-lang="en"] .lz{display:none!important}
+  [data-lang="en"] .ztile .zen{display:none}
+  .langbtn{margin-left:10px;border:1px solid #f5f5f3;background:transparent;color:#f5f5f3;font:700 12px/1 var(--sans);padding:6px 12px;border-radius:999px;cursor:pointer;letter-spacing:.03em;vertical-align:middle}
+  .langbtn:hover{background:#f5f5f3;color:var(--ink)}
+  .langbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -251,14 +259,14 @@
 
     <header>
       <div class="h-meta">
-        <span>Zero Dollar Finds <span class="dot">●</span> 免费情报板</span>
-        <span>Vol. 001</span>
+        <span>Zero Dollar Finds <span class="dot">●</span> <span class="lz">免费情报板</span><span class="le">Free Intel Board</span></span>
+        <span>Vol. 001 <button class="langbtn" id="langToggle" type="button" aria-label="中文 / English">🌐 EN</button></span>
       </div>
       <div class="h-row">
-        <h1>零元情报<span class="acc">.</span></h1>
+        <h1><span class="lz">零元情报</span><span class="le">Zero Dollar Finds</span><span class="acc">.</span></h1>
         <div class="h-txt">
-          <p class="tagline">每条都核实过，先至上架。</p>
-          <p class="promise">免绑卡、真免费；数字要有官方出处，地区同门槛逐条写明。</p>
+          <p class="tagline"><span class="lz">每条都核实过，先至上架。</span><span class="le">Every item verified before it goes live.</span></p>
+          <p class="promise"><span class="lz">免绑卡、真免费；数字要有官方出处，地区同门槛逐条写明。</span><span class="le">No card binding, genuinely free. Every figure comes from an official source, with region and requirements spelled out on each card.</span></p>
         </div>
       </div>
     </header>
@@ -270,36 +278,36 @@
 
     <nav class="zones" aria-label="专区">
       <button class="ztile hot" data-zone="hot" aria-pressed="true">
-        <span class="zcount">4 则</span>
-        <span class="zname">🔥 错过哭死</span>
+        <span class="zcount"><span class="lz">4 则</span><span class="le">4 items</span></span>
+        <span class="zname"><span class="lz">🔥 错过哭死</span><span class="le">🔥 Must Not Miss</span></span>
         <span class="zen">Must Not Miss</span>
       </button>
       <button class="ztile" data-zone="games" aria-pressed="false">
-        <span class="zcount">11 则</span>
-        <span class="zname">🎮 游戏专区</span>
+        <span class="zcount"><span class="lz">11 则</span><span class="le">11 items</span></span>
+        <span class="zname"><span class="lz">🎮 游戏专区</span><span class="le">🎮 Games</span></span>
         <span class="zen">Games</span>
       </button>
       <button class="ztile" data-zone="deals" aria-pressed="false">
-        <span class="zcount">6 则</span>
-        <span class="zname">🧶 羊毛专区</span>
+        <span class="zcount"><span class="lz">6 则</span><span class="le">6 items</span></span>
+        <span class="zname"><span class="lz">🧶 羊毛专区</span><span class="le">🧶 Freebies & Deals</span></span>
         <span class="zen">Freebies</span>
       </button>
       <button class="ztile" data-zone="ai" aria-pressed="false">
-        <span class="zcount">3 则</span>
-        <span class="zname">🤖 AI 资讯</span>
+        <span class="zcount"><span class="lz">3 则</span><span class="le">3 items</span></span>
+        <span class="zname"><span class="lz">🤖 AI 资讯</span><span class="le">🤖 AI News</span></span>
         <span class="zen">AI News</span>
       </button>
     </nav>
-    <p class="hint">左滑下一则 · 右滑返去旧则（可跨日）· 㩒「查看日期」拣日子，选完条栏自动收起</p>
+    <p class="hint"><span class="lz">左滑下一则 · 右滑返去旧则（可跨日）· 㩒「查看日期」拣日子，选完条栏自动收起</span><span class="le">Swipe left for next, right to go back (across days). Tap “Browse by date” to jump to a day — the rail hides itself once you pick.</span></p>
 
     <!-- ============ 专区：错过哭死 ============ -->
     <section class="zone active" id="zone-hot" data-zname="错过哭死">
       <div class="zone-head">
-        <h3>🔥 错过<span class="acc">哭死</span></h3>
-        <p class="zone-sub">全站最劲嗰几则——限时、手慢无，唔睇真系会后悔。</p>
+        <h3><span class="lz">🔥 错过<span class="acc">哭死</span></span><span class="le">🔥 Must Not Miss</span></h3>
+        <p class="zone-sub"><span class="lz">全站最劲嗰几则——限时、手慢无，唔睇真系会后悔。</span><span class="le">The sharpest picks site-wide — limited-time only; hesitate and they are gone.</span></p>
       </div>
       <div class="deckbar">
-        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">5</span> 则</span>
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">5</span><span class="lz"> 则</span></span>
         <span class="dots"></span>
       </div>
       <div class="deck">
@@ -381,26 +389,26 @@
         </article>
         <article class="dcard end">
           <div>
-            <p class="big">本区今轮睇完<span class="acc">。</span></p>
-            <p>有更劲嘅限时料核实好<br>会即刻补入嚟</p>
+            <p class="big"><span class="lz">本区今轮睇完</span><span class="le">That is everything in this zone</span><span class="acc">.</span></p>
+            <p class="lz">有更劲嘅限时料核实好<br>会即刻补入嚟</p><p class="le">Sharper limited-time finds<br>will land here once verified</p>
             <p class="mono">Stay tuned</p>
           </div>
         </article>
       </div>
       <div class="decknav">
-        <button class="navbtn prevBtn" disabled>← 上一则</button>
-        <button class="navbtn primary nextBtn">下一则 →</button>
+        <button class="navbtn prevBtn" disabled><span class="lz">← 上一则</span><span class="le">← Prev</span></button>
+        <button class="navbtn primary nextBtn"><span class="lz">下一则 →</span><span class="le">Next →</span></button>
       </div>
     </section>
 
     <!-- ============ 专区：游戏 ============ -->
     <section class="zone" id="zone-games" data-zname="游戏专区">
       <div class="zone-head">
-        <h3>🎮 游戏<span class="acc">专区</span></h3>
-        <p class="zone-sub">限免游戏，领咗入库永久保留——白嫖一部少一部。</p>
+        <h3><span class="lz">🎮 游戏<span class="acc">专区</span></span><span class="le">🎮 Games</span></h3>
+        <p class="zone-sub"><span class="lz">限免游戏，领咗入库永久保留——白嫖一部少一部。</span><span class="le">Free-to-keep games: claim them into your library and they are yours forever.</span></p>
       </div>
       <div class="deckbar">
-        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">12</span> 则</span>
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">12</span><span class="lz"> 则</span></span>
         <span class="dots"></span>
       </div>
       <div class="deck">
@@ -614,26 +622,26 @@
         </article>
         <article class="dcard end">
           <div>
-            <p class="big">本区今轮睇完<span class="acc">。</span></p>
-            <p>雷达每日扫 Epic、Steam 等平台<br>有限免核实好即刻上架</p>
+            <p class="big"><span class="lz">本区今轮睇完</span><span class="le">That is everything in this zone</span><span class="acc">.</span></p>
+            <p class="lz">雷达每日扫 Epic、Steam 等平台<br>有限免核实好即刻上架</p><p class="le">The radar sweeps Epic, Steam and more daily<br>verified freebies are listed at once</p>
             <p class="mono">Radar scanning</p>
           </div>
         </article>
       </div>
       <div class="decknav">
-        <button class="navbtn prevBtn" disabled>← 上一则</button>
-        <button class="navbtn primary nextBtn">下一则 →</button>
+        <button class="navbtn prevBtn" disabled><span class="lz">← 上一则</span><span class="le">← Prev</span></button>
+        <button class="navbtn primary nextBtn"><span class="lz">下一则 →</span><span class="le">Next →</span></button>
       </div>
     </section>
 
     <!-- ============ 专区：羊毛 ============ -->
     <section class="zone" id="zone-deals" data-zname="羊毛专区">
       <div class="zone-head">
-        <h3>🧶 羊毛<span class="acc">专区</span></h3>
-        <p class="zone-sub">免费额度、零元资源、真金白银嘅着数——核实过先上架。</p>
+        <h3><span class="lz">🧶 羊毛<span class="acc">专区</span></span><span class="le">🧶 Freebies &amp; Deals</span></h3>
+        <p class="zone-sub"><span class="lz">免费额度、零元资源、真金白银嘅着数——核实过先上架。</span><span class="le">Free credits, zero-cost resources and real savings — verified before listing.</span></p>
       </div>
       <div class="deckbar">
-        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">7</span> 则</span>
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">7</span><span class="lz"> 则</span></span>
         <span class="dots"></span>
       </div>
       <div class="deck">
@@ -752,26 +760,26 @@
         </article>
         <article class="dcard end">
           <div>
-            <p class="big">本区今轮睇完<span class="acc">。</span></p>
-            <p>免绑卡、真免费嘅羊毛<br>核实好会即刻补入嚟</p>
+            <p class="big"><span class="lz">本区今轮睇完</span><span class="le">That is everything in this zone</span><span class="acc">.</span></p>
+            <p class="lz">免绑卡、真免费嘅羊毛<br>核实好会即刻补入嚟</p><p class="le">No-card, genuinely free deals<br>will land here once verified</p>
             <p class="mono">Stay tuned</p>
           </div>
         </article>
       </div>
       <div class="decknav">
-        <button class="navbtn prevBtn" disabled>← 上一则</button>
-        <button class="navbtn primary nextBtn">下一则 →</button>
+        <button class="navbtn prevBtn" disabled><span class="lz">← 上一则</span><span class="le">← Prev</span></button>
+        <button class="navbtn primary nextBtn"><span class="lz">下一则 →</span><span class="le">Next →</span></button>
       </div>
     </section>
 
     <!-- ============ 专区：AI 资讯 ============ -->
     <section class="zone" id="zone-ai" data-zname="AI 资讯">
       <div class="zone-head">
-        <h3>🤖 AI <span class="acc">资讯</span></h3>
-        <p class="zone-sub">模型同工具嘅新动向——纯资讯，睇完就算跟上。</p>
+        <h3><span class="lz">🤖 AI <span class="acc">资讯</span></span><span class="le">🤖 AI News</span></h3>
+        <p class="zone-sub"><span class="lz">模型同工具嘅新动向——纯资讯，睇完就算跟上。</span><span class="le">New models and tools — pure intel; read it and you are up to speed.</span></p>
       </div>
       <div class="deckbar">
-        <span class="counter">第 <b class="cur">1</b> 则 / 共 <span class="total">4</span> 则</span>
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">4</span><span class="lz"> 则</span></span>
         <span class="dots"></span>
       </div>
       <div class="deck">
@@ -833,28 +841,33 @@
         </article>
         <article class="dcard end">
           <div>
-            <p class="big">本区今轮睇完<span class="acc">。</span></p>
-            <p>新模型、新工具一有动向<br>核实好会即刻补入嚟</p>
+            <p class="big"><span class="lz">本区今轮睇完</span><span class="le">That is everything in this zone</span><span class="acc">.</span></p>
+            <p class="lz">新模型、新工具一有动向<br>核实好会即刻补入嚟</p><p class="le">New models and tools<br>will land here once verified</p>
             <p class="mono">Stay tuned</p>
           </div>
         </article>
       </div>
       <div class="decknav">
-        <button class="navbtn prevBtn" disabled>← 上一则</button>
-        <button class="navbtn primary nextBtn">下一则 →</button>
+        <button class="navbtn prevBtn" disabled><span class="lz">← 上一则</span><span class="le">← Prev</span></button>
+        <button class="navbtn primary nextBtn"><span class="lz">下一则 →</span><span class="le">Next →</span></button>
       </div>
     </section>
 
     <footer>
-      <h3>核验标准 <span class="dot">●</span></h3>
-      <p>每条情报过三关先发布：① 免绑卡 ② 真免费或真收益（PayPal 收款优先）③ 一手来源可查。地区限制唔会一刀切否决，只会逐条标注清楚。</p>
-      <h3>点样运作 <span class="dot">●</span></h3>
-      <p>雷达系统全天候收集 → 若衡逐条核验包装 → 全部成品上架呢度归档，精选再经 Radar Push Bot 推送去 Telegram 群组。</p>
-      <p class="colophon">最后更新：2026-11-26 · Zero Dollar Finds · 由若衡核验发布</p>
+      <h3><span class="lz">核验标准</span><span class="le">Verification Standard</span> <span class="dot">●</span></h3>
+      <p class="lz">每条情报过三关先发布：① 免绑卡 ② 真免费或真收益（PayPal 收款优先）③ 一手来源可查。地区限制唔会一刀切否决，只会逐条标注清楚。</p><p class="le">Every item passes three gates before publishing: (1) no card binding; (2) genuinely free or genuinely valuable, PayPal payout preferred; (3) a checkable first-hand source. Region limits never auto-reject an item — they are spelled out on each card.</p>
+      <h3><span class="lz">点样运作</span><span class="le">How It Works</span> <span class="dot">●</span></h3>
+      <p class="lz">雷达系统全天候收集 → 若衡逐条核验包装 → 全部成品上架呢度归档，精选再经 Radar Push Bot 推送去 Telegram 群组。</p><p class="le">A radar collects around the clock, Ruoheng verifies and packages every item, and everything is archived here — selected picks are also pushed to the Telegram group.</p>
+      <p class="colophon"><span class="lz">最后更新：2026-11-26 · Zero Dollar Finds · 由若衡核验发布</span><span class="le">Last updated: 2026-11-26 · Zero Dollar Finds · Verified &amp; published by Ruoheng</span></p>
     </footer>
 
   </div>
 </div>
+<script>
+  window.__zdfLang = 'zh';
+  try { var __zl = localStorage.getItem('zdf-lang'); if (__zl === 'en' || __zl === 'zh') window.__zdfLang = __zl; } catch (e) {}
+  document.documentElement.setAttribute('data-lang', window.__zdfLang);
+</script>
 <script>
   (function () {
     var decks = {};   // zoneId -> { goTo(i), cards }
@@ -1020,7 +1033,7 @@
     function jumpToDate(d, label) {
       var hits = byDate[d];
       if (!hits || !hits.length) {
-        dbStatus.innerHTML = '📅 <b>' + label + '</b> 暂未有已核实卡片上架，雷达扫描到即刻补上。';
+        dbStatus.innerHTML = window.__zdfLang === 'en' ? '📅 <b>' + label + '</b> No verified cards for this date yet — new finds are added as soon as the radar picks them up.' : '📅 <b>' + label + '</b> 暂未有已核实卡片上架，雷达扫描到即刻补上。';
         return;
       }
       var activeEl = document.querySelector('.zone.active');
@@ -1033,10 +1046,11 @@
       first.el.classList.remove('flash');
       void first.el.offsetWidth;
       first.el.classList.add('flash');
-      var zonesTxt = hits.map(function (h) { return h.zoneName; })
-        .filter(function (v, i, a) { return a.indexOf(v) === i; }).join('、');
-      dbStatus.innerHTML = '📅 <b>' + label + '</b> 共 ' + hits.length +
-        ' 张卡，分布喺 ' + zonesTxt + '，已定位去第一张。';
+      var zonesTxt = hits.map(function (h) { return window.__zdfLang === 'en' ? ({ hot: 'Must Not Miss', games: 'Games', deals: 'Freebies & Deals', ai: 'AI News' })[h.zoneId] || h.zoneName : h.zoneName; })
+        .filter(function (v, i, a) { return a.indexOf(v) === i; }).join(window.__zdfLang === 'en' ? ', ' : '、');
+      dbStatus.innerHTML = window.__zdfLang === 'en'
+        ? '📅 <b>' + label + '</b> ' + hits.length + (hits.length === 1 ? ' card' : ' cards') + ' in ' + zonesTxt + ' — jumped to the first one.'
+        : '📅 <b>' + label + '</b> 共 ' + hits.length + ' 张卡，分布喺 ' + zonesTxt + '，已定位去第一张。';
     }
 
     /* ---------- 左侧日期栏：当月日子 + Dock 放大 ---------- */
@@ -1050,7 +1064,7 @@
       railOpen = open;
       railEl.classList.toggle('open', open);
       railToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      rtLabel.textContent = open ? '✕ 收起日期栏' : '📅 查看日期';
+      rtLabel.textContent = open ? (window.__zdfLang === 'en' ? '✕ Hide dates' : '✕ 收起日期栏') : (window.__zdfLang === 'en' ? '📅 Browse by date' : '📅 查看日期');
       if (open) {
         var sel = railNums.querySelector('.dnum.sel') || railNums.querySelector('.dnum.today');
         if (sel) railNums.scrollTop = Math.max(0, sel.offsetTop - railNums.clientHeight / 2);
@@ -1060,7 +1074,7 @@
     var now = new Date();
     var Y = now.getFullYear(), M = now.getMonth();
     var daysInMonth = new Date(Y, M + 1, 0).getDate();
-    document.getElementById('railMonth').textContent = (M + 1) + '月';
+    document.getElementById('railMonth').textContent = window.__zdfLang === 'en' ? ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][M] : (M + 1) + '月';
     document.getElementById('railYear').textContent = Y;
     function p2(n) { return (n < 10 ? '0' : '') + n; }
     var todayStr = Y + '-' + p2(M + 1) + '-' + p2(now.getDate());
@@ -1081,10 +1095,11 @@
             el.classList.add('sel');
             var dt = new Date(Y, M, day);
             var rel = ds === todayStr ? '今天' : '周' + weekNames[dt.getDay()];
-            jumpToDate(ds, (M + 1) + '月' + day + '日（' + rel + '）');
+            var relEn = ds === todayStr ? 'Today' : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dt.getDay()];
+            jumpToDate(ds, window.__zdfLang === 'en' ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][M] + ' ' + day + ' (' + relEn + ')' : (M + 1) + '月' + day + '日（' + rel + '）');
           } else {
             el.classList.remove('nope'); void el.offsetWidth; el.classList.add('nope');
-            jumpToDate(ds, (M + 1) + '月' + day + '日');
+            jumpToDate(ds, window.__zdfLang === 'en' ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][M] + ' ' + day : (M + 1) + '月' + day + '日');
           }
           setRail(false);   /* 选完日期自动隐藏日期栏 */
         });
@@ -1143,6 +1158,26 @@
     });
     railNums.addEventListener('pointerleave', resetMag);
     railNums.addEventListener('scroll', function () { if (lastY !== null) queueMag(); }, { passive: true });
+  })();
+</script>
+<script>
+  (function () {
+    var btn = document.getElementById('langToggle');
+    function paint() {
+      document.documentElement.setAttribute('data-lang', window.__zdfLang);
+      if (btn) btn.textContent = window.__zdfLang === 'en' ? '🌐 中文' : '🌐 EN';
+      var rail = document.getElementById('rail');
+      var rt = document.getElementById('rtLabel');
+      if (rt && !(rail && rail.classList.contains('open'))) {
+        rt.textContent = window.__zdfLang === 'en' ? '📅 Browse by date' : '📅 查看日期';
+      }
+    }
+    if (btn) btn.addEventListener('click', function () {
+      window.__zdfLang = window.__zdfLang === 'en' ? 'zh' : 'en';
+      try { localStorage.setItem('zdf-lang', window.__zdfLang); } catch (e) {}
+      paint();
+    });
+    paint();
   })();
 </script>
 </body>
