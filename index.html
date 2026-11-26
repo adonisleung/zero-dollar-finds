@@ -337,7 +337,7 @@
         <span class="zen">Freebies</span>
       </button>
       <button class="ztile" data-zone="ai" aria-pressed="false">
-        <span class="zcount"><span class="lz">26 则</span><span class="le">26 items</span></span>
+        <span class="zcount"><span class="lz">38 则</span><span class="le">38 items</span></span>
         <span class="zname"><span class="lz">🤖 AI 资讯</span><span class="le">🤖 AI News</span></span>
         <span class="zen">AI News</span>
       </button>
@@ -1098,11 +1098,227 @@
         <p class="zone-sub"><span class="lz">模型同工具嘅新动向——纯资讯，睇完就算跟上。</span><span class="le">New models and tools — pure intel; read it and you are up to speed.</span></p>
       </div>
       <div class="deckbar">
-        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">27</span><span class="lz"> 则</span></span>
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">39</span><span class="lz"> 则</span></span>
         <span class="dots"></span>
       </div>
       <div class="deck">
         <!-- CARDS(ai): 新卡加喺第一张位置并写 data-date，占位卡之后可以抽走 -->
+        <article class="dcard" data-cls="a" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
+            <span class="src">Anthropic 官方 · 2026-11-24</span>
+          </div>
+          <div class="idx">N<b>o.</b>060</div>
+          <h2><span class="lz">官方大发布｜<span class="acc">Skills over MCP</span> 公测：MCP server 自带操作手册</span><span class="le">Official Launch｜<span class="acc">Skills over MCP</span> Beta: Servers Now Ship Their Own Playbooks</span></h2>
+          <p class="hook"><span class="lz">Anthropic 在 MCP 两周年宣布：MCP server 可以随工具一起发布 skills，Claude 按需加载；同期 Tasks 与 Elicitation 转正式可用，File Uploads 即将推出。连接器从「给一张工具清单」变成「自带操作手册」，skill 随 server 更新，用户无需单独安装。</span><span class="le">Anthropic announced on MCP's second anniversary: MCP servers can now ship skills alongside their tools, loaded on demand by Claude. Tasks and Elicitation are generally available at the same time, with File Uploads rolling out soon. A connector goes from "a list of tools" to "a built-in playbook" — skills update with the server, no separate install needed.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">发布</span><span class="le">Release</span></dt><dd><span class="lz">2026-11-24 公测<small>Pro／Max／Ultra 默认开启，Team 需管理员打开</small></span><span class="le">Public beta, Nov 24<small>On by default for Pro / Max / Ultra; Team needs admin opt-in</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">关键</span><span class="le">Key change</span></dt><dd><span class="lz">Elicitation 正式可用<small>删库、扣费等操作前必须停下来确认</small></span><span class="le">Elicitation is GA<small>Destructive or paid actions must pause for confirmation first</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">注意</span><span class="le">Note</span></dt><dd><span class="lz">第三方目录连接器的 skill 会被扫描<small>自建 server 不扫描——只加可信 server</small></span><span class="le">Skills from third-party directories get scanned<small>Self-hosted servers are not — only add servers you trust</small></span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more" rel="noopener"><span class="lz">去看官方公告 →</span><span class="le">Read the official announcement →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more" rel="noopener">Anthropic 官方公告</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>061</div>
+          <h2><span class="lz">官方参考｜<span class="acc">modelcontextprotocol/servers</span>：写 MCP 前先读的规范实现</span><span class="le">Official Reference｜<span class="acc">modelcontextprotocol/servers</span>: The Spec-Faithful Implementations to Read Before You Build</span></h2>
+          <p class="hook"><span class="lz">MCP 官方参考 servers 仓库：filesystem、git、fetch、memory、time 等基础 server 的规范实现。写自己的 server 之前先读这里——工具定义、错误处理、传输层都贴着规范走。</span><span class="le">The official MCP reference servers: spec-faithful implementations of filesystem, git, fetch, memory, time and more. Read these before writing your own server — tool definitions, error handling and transports all follow the spec.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 92,283<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 92,283<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-25<small>官方持续维护</small></span><span class="le">Last push Nov 25, 2026<small>Officially maintained</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">适用</span><span class="le">For</span></dt><dd><span class="lz">写 MCP server 的参考实现</span><span class="le">Reference implementations for MCP server builders</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/modelcontextprotocol/servers" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/modelcontextprotocol/servers" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>062</div>
+          <h2><span class="lz">文档神器｜<span class="acc">upstash/context7</span>：给 agent 最新版文档，唔再照旧记忆写过期 API</span><span class="le">Docs for Agents｜<span class="acc">upstash/context7</span>: Up-to-Date Docs, So Agents Stop Writing Deprecated APIs</span></h2>
+          <p class="hook"><span class="lz">给 AI agent 提供最新版本文档的 MCP：按库名取对应版本的文档片段，避免模型照训练记忆写过期 API。接进 Claude Code／Cursor 后，「这个 API 早改了你不知道」的情况明显减少。</span><span class="le">An MCP that serves AI agents up-to-date library docs: fetch version-matched doc snippets by library name, so models stop writing expired APIs from training memory. Wire it into Claude Code / Cursor and "that API changed long ago" happens far less.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 65,522<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 65,522<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-26<small>文档型 MCP 里星数最高的一档</small></span><span class="le">Last push Nov 26, 2026<small>Top-starred among doc MCPs</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">授权</span><span class="le">License</span></dt><dd><span class="lz">MIT</span><span class="le">MIT</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/upstash/context7" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/upstash/context7" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>063</div>
+          <h2><span class="lz">语义检索｜<span class="acc">oraios/serena</span>：改大仓库，先定位符号再改</span><span class="le">Semantic Retrieval｜<span class="acc">oraios/serena</span>: Find the Symbol First, Then Edit the Big Repo</span></h2>
+          <p class="hook"><span class="lz">把 IDE 的语义检索能力做成 MCP toolkit：按符号查找引用、精确替换，而不是整文件读写。改大仓库比 grep 加全文重写省 token，也更少改错上下文；多语言 server 覆盖主流语言。</span><span class="le">An MCP toolkit that brings IDE-grade semantic retrieval to agents: find references by symbol and replace precisely, instead of reading and rewriting whole files. Editing big repos costs fewer tokens and breaks less context than grep plus full rewrites; multi-language servers cover the mainstream languages.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 31,734<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 31,734<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-24<small>基于 LSP，先定位符号再改</small></span><span class="le">Last push Nov 24, 2026<small>LSP-based: locate the symbol, then edit</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">适用</span><span class="le">For</span></dt><dd><span class="lz">大仓库语义检索与精确编辑</span><span class="le">Semantic search and precise edits in large repos</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/oraios/serena" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/oraios/serena" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>064</div>
+          <h2><span class="lz">去 AI 味｜<span class="acc">heydamir/unslop</span>：把一眼 AI 感的界面重做成有设计感的成品</span><span class="le">De-AI Your UI｜<span class="acc">heydamir/unslop</span>: Turn Obviously AI-Looking Interfaces Into Designed Ones</span></h2>
+          <p class="hook"><span class="lz">喂进 Claude 一段 vibecoded UI，它按设计规范改写。10 月底建仓，一个月涨到 2.2 万星——「去 AI 味 UI」是刚需；README 给的是诊断清单和改造步骤，适合当设计审稿的第二双眼睛。</span><span class="le">Feed Claude a vibecoded UI and it rewrites it to a design spec. Launched late October and hit 22k stars in a month — de-AI-ing interfaces is a real need. The README is a diagnostic checklist plus rework steps: a second pair of eyes for design review.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 22,197<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 22,197<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-15<small>一个月涨 2.2 万星</small></span><span class="le">Last push Nov 15, 2026<small>22k stars in its first month</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">授权</span><span class="le">License</span></dt><dd><span class="lz">CC-BY-4.0</span><span class="le">CC-BY-4.0</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/heydamir/unslop" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/heydamir/unslop" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>065</div>
+          <h2><span class="lz">像素特效｜<span class="acc">patch-gg/pixelfx</span>：244 种像素艺术特效，每种一小段可读代码</span><span class="le">Pixel Effects｜<span class="acc">patch-gg/pixelfx</span>: 244 Pixel-Art Effects, Each a Small Readable Snippet</span></h2>
+          <p class="hook"><span class="lz">244 种像素艺术特效，每种都是一小段可读代码，另附一个 Claude Code skill 让 agent 直接调用。不是滤镜参数堆砌，效果以代码为单位，可复用也可改；做像素风、复古游戏美术时省掉手搓 shader。</span><span class="le">244 pixel-art effects, each a small readable snippet of code, plus a Claude Code skill so agents can call them directly. Not a pile of filter parameters — effects are reusable, editable code units that save you hand-writing shaders for pixel-art and retro game art.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 9,411<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 9,411<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-13<small>附 Claude Code skill 可直接调用</small></span><span class="le">Last push Nov 13, 2026<small>Ships a Claude Code skill for direct use</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">授权</span><span class="le">License</span></dt><dd><span class="lz">MIT</span><span class="le">MIT</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/patch-gg/pixelfx" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/patch-gg/pixelfx" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>066</div>
+          <h2><span class="lz">动画短片｜<span class="acc">mromidev/claude-animated-shorts</span>：免费 skill，用 three.js 产出短视频动画</span><span class="le">Animated Shorts｜<span class="acc">mromidev/claude-animated-shorts</span>: A Free Skill That Turns three.js Into Short-Form Animation</span></h2>
+          <p class="hook"><span class="lz">免费 Claude skill：用 three.js 在 3D 世界里驱动 2D 角色，产出短视频动画。能跑但迭代放缓，用前先翻 issues 看已知问题。</span><span class="le">A free Claude skill that drives 2D characters inside a 3D three.js world to produce short-form animated videos. It works, but iteration has slowed — check the issues for known problems before using it.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 5,087<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 5,087<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">末次提交 2026-11-01<small>迭代放缓，用前先翻 issues</small></span><span class="le">Last push Nov 1, 2026<small>Iteration has slowed; check issues first</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">授权</span><span class="le">License</span></dt><dd><span class="lz">MIT</span><span class="le">MIT</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/mromidev/claude-animated-shorts" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/mromidev/claude-animated-shorts" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>067</div>
+          <h2><span class="lz">提示词库｜<span class="acc">freestylefly/awesome-gpt-image-2</span>：546 个案例，Prompt as Code</span><span class="le">Prompt Library｜<span class="acc">freestylefly/awesome-gpt-image-2</span>: 546 Cases, Prompt as Code</span></h2>
+          <p class="hook"><span class="lz">GPT Image 2／2.5 的逆向工程案例库，546 个案例、20 多套工业级模板，每个案例附完整提示词与生成记录。完整 prompt 可一键复制，还有 2.5 同提示词对比专区，另附 Claude Code skill 与插件市场入口，prompt 能被 agent 直接调用。</span><span class="le">A reverse-engineering case library for GPT Image 2 / 2.5: 546 cases and 20+ production-grade templates, each with the full prompt and generation record. Prompts are one-click copyable, there's a side-by-side 2.5 comparison zone, and a Claude Code skill plus plugin marketplace entry let agents call prompts directly.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 36,163<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 36,163<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-23<small>附 Claude Code skill 与插件入口</small></span><span class="le">Last push Nov 23, 2026<small>Ships a Claude Code skill and plugin entry</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">授权</span><span class="le">License</span></dt><dd><span class="lz">MIT</span><span class="le">MIT</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/freestylefly/awesome-gpt-image-2" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/freestylefly/awesome-gpt-image-2" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>068</div>
+          <h2><span class="lz">跨模型对照｜<span class="acc">ai-boost/awesome-image-video-prompts</span>：同一创意跨模型横向对照</span><span class="le">Cross-Model Comparison｜<span class="acc">ai-boost/awesome-image-video-prompts</span>: One Idea, Compared Across Models</span></h2>
+          <p class="hook"><span class="lz">主流图像／视频模型的 copy-ready 提示词合集，每条都配真实生成结果。同一创意跨模型横向对照，适合选模型、定参数。</span><span class="le">A copy-ready prompt collection for leading image and video models, each entry paired with a real generated result. Compare the same idea across models — handy for picking a model and locking in parameters.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 3,533<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 3,533<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-24<small>每条配真实生成结果</small></span><span class="le">Last push Nov 24, 2026<small>Every prompt ships with a real result</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">授权</span><span class="le">License</span></dt><dd><span class="lz">GPL-3.0</span><span class="le">GPL-3.0</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/ai-boost/awesome-image-video-prompts" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/ai-boost/awesome-image-video-prompts" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge partial"><span class="lz">⚠️ 部分未核实</span><span class="le">⚠️ Partly unverified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">dumate 仓库 · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>069</div>
+          <h2><span class="lz">模板精选｜<span class="acc">厚涂建筑地标艺术海报</span>：4:5 竖版，油画刀厚涂</span><span class="le">Template Pick｜<span class="acc">Impasto Architectural Landmark Poster</span>: 4:5 Portrait, Palette-Knife Thick Paint</span></h2>
+          <p class="hook"><span class="lz">GPT Image 2／2.5 模板：把地标换成厚涂油画，油画刀刮出立体笔触，裱在暖白手工纸上，底部配斜体地标名。换 [STRUCTURE / LANDMARK] 同 [CITY, COUNTRY] 即可出片，博物馆级艺术海报质感。</span><span class="le">A GPT Image 2 / 2.5 template: turn any landmark into an impasto oil painting, palette-knife strokes sculpting the architecture onto warm off-white handmade paper, with the landmark's name in italic type below. Swap [STRUCTURE / LANDMARK] and [CITY, COUNTRY] and it's ready — museum-quality art-print feel.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">来源</span><span class="le">Source</span></dt><dd><span class="lz">freestylefly 案例 545<small>原作者 X 帖二手引用，未逐条溯源</small></span><span class="le">freestylefly case 545<small>Via the author's X post, not traced first-hand</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">适用</span><span class="le">For</span></dt><dd><span class="lz">GPT Image 2／2.5<small>尾部 --ar 4:5 是 Midjourney 语法</small></span><span class="le">GPT Image 2 / 2.5<small>Trailing --ar 4:5 is Midjourney syntax</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">关键句</span><span class="le">Key line</span></dt><dd><span class="lz">extremely thick palette-knife impasto<small>定厚涂质感；删咗就退化成普通写实画</small></span><span class="le">extremely thick palette-knife impasto<small>Sets the thick-paint texture; drop it and it turns generic</small></span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/adonisleung/dumate/blob/main/image-prompts.md" rel="noopener"><span class="lz">去看模板全文 →</span><span class="le">Read the templates →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/adonisleung/dumate/blob/main/image-prompts.md" rel="noopener">dumate 仓库</a></p>
+        </article>
+        <article class="dcard" data-cls="b" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">🔗 乙类 · 工具资源</span><span class="le">🔗 Tools &amp; Resources</span></span>
+            <span class="src">GitHub · 2026-11-27</span>
+          </div>
+          <div class="idx">N<b>o.</b>070</div>
+          <h2><span class="lz">小红书 MCP｜<span class="acc">xpzouying/xiaohongshu-mcp</span>：13 个工具，图文视频真能发出去</span><span class="le">Xiaohongshu MCP｜<span class="acc">xpzouying/xiaohongshu-mcp</span>: 13 Tools That Actually Publish Posts and Videos</span></h2>
+          <p class="hook"><span class="lz">小红书 MCP server：13 个工具覆盖发布图文／视频、取笔记与互动数据，另有浏览器插件版 x-mcp 免部署。国内平台里少见「能真的发出去」的 MCP，OpenClaw／Claude Code 都能接；批量操作前先用小号验证。</span><span class="le">A Xiaohongshu MCP server: 13 tools covering text-image and video publishing plus notes and engagement data, with a browser-plugin version (x-mcp) that needs no deployment. Rare among domestic platforms — it actually publishes. Works with OpenClaw / Claude Code; test bulk actions with a burner account first.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">热度</span><span class="le">Popularity</span></dt><dd><span class="lz">GitHub ⭐ 17,345<small>2026-11-27 经 GitHub API 核实</small></span><span class="le">GitHub ⭐ 17,345<small>Verified via GitHub API, Nov 27</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">活跃</span><span class="le">Activity</span></dt><dd><span class="lz">最近提交 2026-11-25<small>插件版直接喺 Chrome／Edge 本地跑</small></span><span class="le">Last push Nov 25, 2026<small>Plugin version runs locally in Chrome / Edge</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">授权</span><span class="le">License</span></dt><dd><span class="lz">Apache-2.0</span><span class="le">Apache-2.0</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://github.com/xpzouying/xiaohongshu-mcp" rel="noopener"><span class="lz">去 GitHub 看 →</span><span class="le">View on GitHub →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/xpzouying/xiaohongshu-mcp" rel="noopener">GitHub 仓库页</a></p>
+        </article>
+        <article class="dcard" data-cls="a" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
+            <span class="src">掘金 · 2026-11-20</span>
+          </div>
+          <div class="idx">N<b>o.</b>071</div>
+          <h2><span class="lz">实操合集｜<span class="acc">掘金</span>：Skill 管底座、Prompt 管表达、MCP 管连接</span><span class="le">Hands-On Collection｜<span class="acc">Juejin</span>: Skills for the Base, Prompts for Expression, MCP for Connection</span></h2>
+          <p class="hook"><span class="lz">按「Skill 管能力底座／Prompt 管表达／MCP 管连接」三层组织的实操合集，13 个常用工具，含小红书封面 prompt 与「文生图提示词架构师」完整角色设定。小红书封面 prompt 明确约束 50–100 个英文单词、必含色彩与光影描述，输出能直接贴进生图工具。</span><span class="le">A hands-on collection organized in three layers — Skills for the capability base, Prompts for expression, MCP for connection — with 13 everyday tools, including a Xiaohongshu cover prompt and a full "image-prompt architect" role spec. The cover prompt constrains output to 50–100 English words with mandatory color and lighting description, ready to paste into any image tool.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">来源</span><span class="le">Source</span></dt><dd><span class="lz">掘金文章（2026-11-20）<small>已核实页面可达、内容相符</small></span><span class="le">Juejin article, Nov 20<small>Reachability and content verified</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">亮点</span><span class="le">Highlight</span></dt><dd><span class="lz">文生图架构师要求中英双版本＋意图澄清<small>比堆形容词稳</small></span><span class="le">The architect role asks for bilingual output + intent clarification<small>Steadier than piling on adjectives</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">形式</span><span class="le">Form</span></dt><dd><span class="lz">三层组织实操合集，13 个工具</span><span class="le">Three-layer hands-on collection, 13 tools</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://article.juejin.cn/post/7709818243503636534" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://article.juejin.cn/post/7709818243503636534" rel="noopener">掘金原文</a></p>
+        </article>
         <article class="dcard" data-cls="b" data-date="2026-11-26">
           <div class="card-top">
             <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
