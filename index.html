@@ -236,6 +236,23 @@
     .deck{grid-template-columns:repeat(3,1fr)}
   }
 
+  /* ---------- 横板可读性优化（2026-11-26）：网格卡片内事实单栏、标题/编号收细、内边距收紧 ---------- */
+  /* 根因：>=720px 时 .deck 变网格（2/3 栏），但 .facts 仍沿用 2 栏，事实值被压成竖排单字。 */
+  @media (min-width:720px){
+    .deck .dcard{padding:22px 24px}
+    .deck .idx{font-size:60px;margin-top:8px}
+    .deck .dcard h2{font-size:27px;line-height:1.3}
+    .deck .hook{font-size:16px;line-height:1.7}
+    .deck .facts{display:grid;grid-template-columns:1fr;column-gap:0}
+    .deck .fact{grid-template-columns:64px 1fr;gap:12px;padding:10px 0}
+    .deck .fact dt{font-size:11.5px;color:#555;padding-top:5px}
+    .deck .fact dd{font-size:15px;line-height:1.6}
+  }
+  @media (min-width:1400px){
+    .deck .dcard h2{font-size:25px}
+    .deck .idx{font-size:56px}
+  }
+
   /* ---------- 中英切换（2026-11-26）：.lz 中文 / .le English，按 html[data-lang] 显示 ---------- */
   [data-lang="zh"] .le{display:none!important}
   [data-lang="en"] .lz{display:none!important}
