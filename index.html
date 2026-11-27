@@ -185,7 +185,7 @@
     .shell{max-width:1180px}
     .main{max-width:1060px;margin:0 auto;padding:0 28px 56px}
     .zones{grid-template-columns:repeat(3,1fr)}
-    .deck{max-width:880px;margin-left:auto;margin-right:auto;height:min(600px,calc(100dvh - 330px));min-height:440px}
+    .deck{max-width:none;margin-left:auto;margin-right:auto;height:min(600px,calc(100dvh - 330px));min-height:440px}
     .dcard{padding:30px 36px}
     .idx{font-size:84px}
     .dcard h2{font-size:38px}
@@ -220,10 +220,13 @@
   }
 
   /* ---------- 超宽桌面：放宽容器，填满大屏 ---------- */
+  /* 2026-11-28 宽屏对齐修复：.deck 旧上限（720px 档 880px／1400px 档 1020px）比内容栏窄，
+     卡片行两边露出空白带、与 banner 不齐；改为 max-width:none 与内容栏同宽填满，
+     卡片上限由 .main 的 max-width 天然封顶（1400px 档内容栏 1184px、三栏卡约 384px）。 */
   @media (min-width:1400px){
     .shell{max-width:1360px}
     .main{max-width:1240px}
-    .deck{max-width:1020px}
+    .deck{max-width:none}
   }
 
   /* ---------- 平铺：只在小屏（<720px）堆叠；>=720px 一律网格平铺 ---------- */
