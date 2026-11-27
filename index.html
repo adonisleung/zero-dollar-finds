@@ -124,9 +124,14 @@
   .deck{position:relative;height:min(80vh,720px);height:min(80svh,720px);min-height:500px;margin-top:12px}
   [data-lang="en"] .deck{height:min(88vh,780px);height:min(88svh,780px)}
   .dcard{position:absolute;inset:0;background:var(--card);border:1px solid var(--ink);
-    box-shadow:5px 5px 0 rgba(19,19,19,.9);padding:22px 22px 20px;overflow:hidden;overflow-y:auto;
+    box-shadow:5px 5px 0 rgba(19,19,19,.9);padding:22px 22px 20px;overflow:hidden;
     display:flex;flex-direction:column;will-change:transform;touch-action:pan-y;
     transition:transform .38s cubic-bezier(.22,.9,.3,1),opacity .38s}
+  /* 2026-11-28 卡片结构改版（老细要求）：成张卡唔再一齐碌——.dcard 改 overflow:hidden
+     定高 flex，内容包入 .card-scroll（flex:1＋min-height:0＋overflow-y:auto）自己碌，
+     .cta／.origin 留喺滚动区外钉底，长卡碌内容时掣常驻可见、唔遮字。
+     现有卡由页面 JS 自动包层（wrapCards），新卡模板本身带 .card-scroll（见 PUBLISHING.md）。 */
+  .card-scroll{flex:1;min-height:0;overflow-y:auto;touch-action:pan-y}
   .dcard.behind-1{transform:translateY(16px) scale(.955)}
   .dcard.behind-2{transform:translateY(32px) scale(.91)}
   .dcard.gone-left{transform:translateX(-135%) rotate(-9deg)!important;opacity:0}
@@ -138,16 +143,13 @@
   @keyframes flashring{0%{box-shadow:0 0 0 0 rgba(255,77,0,.85),5px 5px 0 rgba(19,19,19,.9)}100%{box-shadow:0 0 0 16px rgba(255,77,0,0),5px 5px 0 rgba(19,19,19,.9)}}
   .dcard.flash{animation:flashring .8s ease-out 2}
 
-  /* 2026-11-28 等高修复（滚动条可见）：卡内滚动沿用 .dcard 既 overflow-y:auto，
-     但系统默认滚动条多为隐形/覆盖式，用户唔知张卡可以碌；改幼滚动条＋
-     可见轨道/滑块配色（深色结尾卡用浅色版），等超长卡有明确可碌提示。 */
-  .dcard{scrollbar-width:thin;scrollbar-color:rgba(19,19,19,.45) rgba(19,19,19,.08)}
-  .dcard::-webkit-scrollbar{width:6px}
-  .dcard::-webkit-scrollbar-track{background:rgba(19,19,19,.08)}
-  .dcard::-webkit-scrollbar-thumb{background:rgba(19,19,19,.45);border-radius:3px}
-  .dcard.end{scrollbar-color:rgba(255,255,255,.55) rgba(255,255,255,.14)}
-  .dcard.end::-webkit-scrollbar-track{background:rgba(255,255,255,.14)}
-  .dcard.end::-webkit-scrollbar-thumb{background:rgba(255,255,255,.55)}
+  /* 2026-11-28 等高修复（滚动条可见）：系统默认滚动条多为隐形/覆盖式，用户唔知
+     内容区可以碌；改幼滚动条＋可见轨道/滑块配色，等超长卡有明确可碌提示。
+     结构改版后滚动条样式改挂 .card-scroll（滚动区已由成张卡改为内容层）。 */
+  .card-scroll{scrollbar-width:thin;scrollbar-color:rgba(19,19,19,.45) rgba(19,19,19,.08)}
+  .card-scroll::-webkit-scrollbar{width:6px}
+  .card-scroll::-webkit-scrollbar-track{background:rgba(19,19,19,.08)}
+  .card-scroll::-webkit-scrollbar-thumb{background:rgba(19,19,19,.45);border-radius:3px}
 
   .card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
     font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
@@ -230,7 +232,7 @@
     .masthead h1{font-size:clamp(20px,4.5vw,26px)}
     .deckbar{margin-top:8px}
     .deck{height:calc(100dvh - 148px);min-height:300px;max-height:460px;max-width:860px;margin-left:auto;margin-right:auto;margin-top:8px}
-    .dcard{padding:16px 22px 14px;overflow-y:auto}
+    .dcard{padding:16px 22px 14px}
     .idx{font-size:42px;margin:4px 0 0}
     .dcard h2{font-size:21px;margin:4px 0 6px}
     .hook{font-size:14px;line-height:1.55}
@@ -265,14 +267,15 @@
     /* 2026-11-28 等高修复（宽屏）：行高改统一标准高，唔再由每行最长卡决定
        （实测旧行高 643–935px 参差）。取值按实测自然高度分布：两栏 zh 700／en 750、
        三栏 zh 740／en 810（见 1400 档），约覆盖八至九成卡全显；超长卡卡内滚动
-       （.dcard 本有 overflow-y:auto＋已加可见滚动条样式），短卡由 .spacer 撑开、
+       （滚动区为卡内 .card-scroll 层＋可见滚动条样式），短卡由滚动区 flex:1 撑开、
        CTA 钉底。.origin 预留两行高（40px），来源行折行时 CTA 仍齐底（实测曾差 20px）。 */
     .deck{grid-auto-rows:700px}
     [data-lang="en"] .deck{grid-auto-rows:750px}
     .deck .origin{min-height:40px}
     /* 注：曾试 CTA sticky 钉底令超长卡按钮都齐线，但实测 sticky 掣会遮住
-       超长卡最后一行事实文字（静止时好似食字），违「唔裁剪内容」原则，已撤回；
-       超长卡按钮行卡内滚动到底即见（有可见滚动条提示），fit 卡则由 .spacer 钉底齐线。 */
+       超长卡最后一行事实文字（静止时好似食字），违「唔裁剪内容」原则，已撤回。
+       2026-11-28 结构改版取代 sticky 方案：内容入 .card-scroll 自碌、CTA／来源
+       喺滚动区外钉底——掣常驻可见兼永不遮字，长短卡按钮天然齐线。 */
     .dcard{position:relative!important;inset:auto!important;transform:none!important;opacity:1!important;display:flex!important;pointer-events:auto!important}
     .dcard.gone-left,.dcard.gone-right{transform:none!important}
     .deckbar,.decknav{display:none!important}
@@ -1963,6 +1966,28 @@
 </script>
 <script>
   (function () {
+    /* ---------- 卡片结构改版：内容包入 .card-scroll，CTA／来源钉底（2026-11-28） ----------
+       现有静态卡未带 .card-scroll 层，喺任何排版／拖拽逻辑运行前自动包装：
+       将 .cta／.origin 之前既内容移入新层，.spacer 既钉底职责由 flex 滚动区取代、移除。
+       .end／.void 卡无 .cta，保持原样。新卡模板本身已带 .card-scroll，会自动跳过。 */
+    document.querySelectorAll('.dcard').forEach(function (card) {
+      if (card.querySelector('.card-scroll')) return;
+      var cta = card.querySelector('.cta');
+      if (!cta) return;
+      var scroller = document.createElement('div');
+      scroller.className = 'card-scroll';
+      var origin = card.querySelector('.origin');
+      var keep = [cta, origin];
+      Array.prototype.slice.call(card.childNodes).forEach(function (node) {
+        if (keep.indexOf(node) !== -1) return;
+        if (node.nodeType === 1 && node.classList.contains('spacer')) return;
+        scroller.appendChild(node);
+      });
+      var spacer = card.querySelector('.spacer');
+      if (spacer) spacer.remove();
+      card.insertBefore(scroller, card.firstChild);
+    });
+
     var decks = {};   // zoneId -> { goTo(i), cards }
 
     /* ---------- 专区切换 ---------- */

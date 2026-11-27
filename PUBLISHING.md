@@ -41,6 +41,7 @@
 
 ```html
 <article class="dcard" data-cls="a" data-date="YYYY-MM-DD">
+  <div class="card-scroll">
   <div class="card-top">
     <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
     <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
@@ -54,7 +55,7 @@
     <div class="fact"><dt><span class="lz">门槛</span><span class="le">Requires</span></dt><dd><span class="lz">…</span><span class="le">…</span></dd></div>
     <div class="fact"><dt><span class="lz">截止</span><span class="le">Deadline</span></dt><dd><span class="lz">…</span><span class="le">…</span></dd></div>
   </dl>
-  <div class="spacer"></div>
+  </div>
   <a class="cta" href="https://…" rel="noopener"><span class="lz">去领取 →</span><span class="le">Claim it →</span></a>
   <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://…" rel="noopener"><span class="lz">来源页中文名</span><span class="le">Source page name</span></a></p>
 </article>
@@ -68,7 +69,7 @@
 
 页面已行「标准高」制度：宽屏行高统一（两栏 zh 700／en 750、三栏 zh 740／en 810 px）、
 细屏 deck 定高（zh 约 675–720／en 约 743–780 px），卡内纵向 flex 将 CTA 钉底；
-**超出标准高的卡靠卡内滚动条**（已做可见样式）。新卡文案按以下上限写，
+**超出标准高的卡靠卡内滚动条**（已做可见样式）。2026-11-28 结构定版：内容入 `.card-scroll` 层自碌，`.cta`／`.origin` 喺层外钉底——碌内容时掣常驻可见、永不遮字；模板唔再用 `.spacer`。新卡文案按以下上限写，
 令绝大多数卡在标准高内全显、高度自然统一（上限按 2026-11-28 实测现行 78 张卡分布定，
 约在 p75–p85 水平）：
 
