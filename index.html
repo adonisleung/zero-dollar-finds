@@ -100,10 +100,18 @@
   .zone-head h3 .acc{color:var(--accent)}
   .zone-sub{font-size:14.5px;color:var(--muted);margin-top:4px}
   .deckbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 2px 0}
-  .counter{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink)}
+  /* 2026-11-28 修复：多卡区（工具箱 36、游戏 22）既进度段自然宽度远超细屏行宽，
+     .dots 段条 min-content 顶死唔识缩，flex 唯有将 .counter 压到一字宽逐字直排，
+     页面仲横向溢出。改：计数块 flex:none＋nowrap 保横行完整；段条区 flex:1＋min-width:0
+     弹性收窄，段条本身可缩（flex:1 1 22px＋min-width:0，上限 22px 保原样），靠右对齐。 */
+  .counter{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink);flex:none;white-space:nowrap}
   .counter b{color:var(--accent-ink)}
-  .dots{display:flex;gap:6px}
-  .dots i{width:22px;height:4px;background:#cfcfcf;display:block}
+  .dots{display:flex;gap:6px;flex:1;min-width:0;justify-content:flex-end}
+  .dots i{width:22px;max-width:22px;height:4px;background:#cfcfcf;display:block;flex:1 1 22px;min-width:0}
+  /* 细屏段距收窄，令 36 段喺 390px 都有返可见宽度，唔会缩到剩低空隙 */
+  @media (max-width:480px){
+    .dots{gap:3px}
+  }
   .dots i.on{background:var(--accent)}
 
   /* ---------- 卡片堆 ---------- */
