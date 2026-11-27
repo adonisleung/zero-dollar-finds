@@ -230,9 +230,14 @@
   }
 
   /* ---------- 平铺：只在小屏（<720px）堆叠；>=720px 一律网格平铺 ---------- */
+  /* 2026-11-28 修复：堆叠模式既状态类 gone-left/gone-right 自带 transform !important，
+     specificity（0,2,0）压过下面 .dcard 既 transform:none（0,1,0），令「今日之前」既卡
+     喺网格模式仍被掟出兼旋转（AI 资讯／AI 工具箱区中招）；layout() 仲会帮嗰啲卡
+     落 inline pointer-events:none，网格入面会㩒唔到。以下两条喺网格模式一律归零。 */
   @media (min-width:720px){
     .deck{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;height:auto!important;min-height:0!important;max-height:none!important}
-    .dcard{position:relative!important;inset:auto!important;transform:none!important;opacity:1!important;display:flex!important}
+    .dcard{position:relative!important;inset:auto!important;transform:none!important;opacity:1!important;display:flex!important;pointer-events:auto!important}
+    .dcard.gone-left,.dcard.gone-right{transform:none!important}
     .deckbar,.decknav{display:none!important}
   }
   @media (min-width:1400px){
