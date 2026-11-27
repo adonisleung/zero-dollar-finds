@@ -115,7 +115,14 @@
   .dots i.on{background:var(--accent)}
 
   /* ---------- 卡片堆 ---------- */
-  .deck{position:relative;height:min(70vh,600px);min-height:470px;margin-top:12px}
+  /* 2026-11-28 等高修复（细屏）：deck 改标准高——旧规则 min(70vh,600px) 跟实视口高走，
+     真机工具栏一伸一缩卡高就跳（实测视口 844/740/660 → deck 591/518/470）；
+     改用 svh（细视口高，工具栏伸缩时唔变）＋上限 720px，取值按实测自然高度分布
+     （390px 中文卡 p50 664／p80 718、英文 p50 759／p80 837）定：中文覆盖约六成全显、
+     英文约四成，少数长卡行卡内滚动（见滚动条样式修复）。英文卡系统性长过中文，
+     英文模式酌量加高。横屏矮视口有自己既规则（min-height:300/max-height:460）喺后面，唔受影响。 */
+  .deck{position:relative;height:min(80vh,720px);height:min(80svh,720px);min-height:500px;margin-top:12px}
+  [data-lang="en"] .deck{height:min(88vh,780px);height:min(88svh,780px)}
   .dcard{position:absolute;inset:0;background:var(--card);border:1px solid var(--ink);
     box-shadow:5px 5px 0 rgba(19,19,19,.9);padding:22px 22px 20px;overflow:hidden;overflow-y:auto;
     display:flex;flex-direction:column;will-change:transform;touch-action:pan-y;
@@ -130,6 +137,17 @@
   .dcard.nudge{animation:nudge .9s ease .7s 1}
   @keyframes flashring{0%{box-shadow:0 0 0 0 rgba(255,77,0,.85),5px 5px 0 rgba(19,19,19,.9)}100%{box-shadow:0 0 0 16px rgba(255,77,0,0),5px 5px 0 rgba(19,19,19,.9)}}
   .dcard.flash{animation:flashring .8s ease-out 2}
+
+  /* 2026-11-28 等高修复（滚动条可见）：卡内滚动沿用 .dcard 既 overflow-y:auto，
+     但系统默认滚动条多为隐形/覆盖式，用户唔知张卡可以碌；改幼滚动条＋
+     可见轨道/滑块配色（深色结尾卡用浅色版），等超长卡有明确可碌提示。 */
+  .dcard{scrollbar-width:thin;scrollbar-color:rgba(19,19,19,.45) rgba(19,19,19,.08)}
+  .dcard::-webkit-scrollbar{width:6px}
+  .dcard::-webkit-scrollbar-track{background:rgba(19,19,19,.08)}
+  .dcard::-webkit-scrollbar-thumb{background:rgba(19,19,19,.45);border-radius:3px}
+  .dcard.end{scrollbar-color:rgba(255,255,255,.55) rgba(255,255,255,.14)}
+  .dcard.end::-webkit-scrollbar-track{background:rgba(255,255,255,.14)}
+  .dcard.end::-webkit-scrollbar-thumb{background:rgba(255,255,255,.55)}
 
   .card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
     font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
@@ -184,7 +202,7 @@
     color:#9a9a9a;border-top:1px solid #333;margin-top:20px;padding-top:13px}
   @media (min-width:640px){
     .main{padding:0 20px 64px 14px}
-    .deck{height:580px}
+    .deck{height:min(80vh,720px);height:min(80svh,720px)}
     .zones{grid-template-columns:repeat(3,1fr)}
     .ztile .zname{font-size:17px}
   }
@@ -244,12 +262,24 @@
      落 inline pointer-events:none，网格入面会㩒唔到。以下两条喺网格模式一律归零。 */
   @media (min-width:720px){
     .deck{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;height:auto!important;min-height:0!important;max-height:none!important}
+    /* 2026-11-28 等高修复（宽屏）：行高改统一标准高，唔再由每行最长卡决定
+       （实测旧行高 643–935px 参差）。取值按实测自然高度分布：两栏 zh 700／en 750、
+       三栏 zh 740／en 810（见 1400 档），约覆盖八至九成卡全显；超长卡卡内滚动
+       （.dcard 本有 overflow-y:auto＋已加可见滚动条样式），短卡由 .spacer 撑开、
+       CTA 钉底。.origin 预留两行高（40px），来源行折行时 CTA 仍齐底（实测曾差 20px）。 */
+    .deck{grid-auto-rows:700px}
+    [data-lang="en"] .deck{grid-auto-rows:750px}
+    .deck .origin{min-height:40px}
+    /* 注：曾试 CTA sticky 钉底令超长卡按钮都齐线，但实测 sticky 掣会遮住
+       超长卡最后一行事实文字（静止时好似食字），违「唔裁剪内容」原则，已撤回；
+       超长卡按钮行卡内滚动到底即见（有可见滚动条提示），fit 卡则由 .spacer 钉底齐线。 */
     .dcard{position:relative!important;inset:auto!important;transform:none!important;opacity:1!important;display:flex!important;pointer-events:auto!important}
     .dcard.gone-left,.dcard.gone-right{transform:none!important}
     .deckbar,.decknav{display:none!important}
   }
   @media (min-width:1400px){
-    .deck{grid-template-columns:repeat(3,1fr)}
+    .deck{grid-template-columns:repeat(3,1fr);grid-auto-rows:740px}
+    [data-lang="en"] .deck{grid-auto-rows:810px}
   }
 
   /* ---------- 横板可读性优化（2026-11-26）：网格卡片内事实单栏、标题/编号收细、内边距收紧 ---------- */
