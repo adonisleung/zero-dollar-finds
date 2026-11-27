@@ -177,14 +177,14 @@
   @media (min-width:640px){
     .main{padding:0 20px 64px 14px}
     .deck{height:580px}
-    .zones{grid-template-columns:repeat(4,1fr)}
+    .zones{grid-template-columns:repeat(3,1fr)}
     .ztile .zname{font-size:17px}
   }
   /* ---------- 阔屏 / 横屏自适应：舞台式阔卡（专区一行四格、大字阶、事实两栏） ---------- */
   @media (min-width:720px){
     .shell{max-width:1180px}
     .main{max-width:1060px;margin:0 auto;padding:0 28px 56px}
-    .zones{grid-template-columns:repeat(4,1fr)}
+    .zones{grid-template-columns:repeat(3,1fr)}
     .deck{max-width:880px;margin-left:auto;margin-right:auto;height:min(600px,calc(100dvh - 330px));min-height:440px}
     .dcard{padding:30px 36px}
     .idx{font-size:84px}
@@ -215,7 +215,7 @@
     .origin{margin-top:6px}
     .decknav{margin-top:14px}
     .navbtn{min-height:44px}
-    .zones{grid-template-columns:repeat(4,1fr)}
+    .zones{grid-template-columns:repeat(3,1fr)}
     footer{margin-top:24px}
   }
 
@@ -336,8 +336,18 @@
         <span class="zname"><span class="lz">🧶 羊毛专区</span><span class="le">🧶 Freebies & Deals</span></span>
         <span class="zen">Freebies</span>
       </button>
+      <button class="ztile" data-zone="earn" aria-pressed="false">
+        <span class="zcount"><span class="lz">0 则</span><span class="le">0 items</span></span>
+        <span class="zname"><span class="lz">🏆 搞钱专区</span><span class="le">🏆 Earn</span></span>
+        <span class="zen">Earn</span>
+      </button>
+      <button class="ztile" data-zone="tools" aria-pressed="false">
+        <span class="zcount"><span class="lz">33 则</span><span class="le">33 items</span></span>
+        <span class="zname"><span class="lz">🧰 AI 工具箱</span><span class="le">🧰 AI Toolbox</span></span>
+        <span class="zen">AI Toolbox</span>
+      </button>
       <button class="ztile" data-zone="ai" aria-pressed="false">
-        <span class="zcount"><span class="lz">38 则</span><span class="le">38 items</span></span>
+        <span class="zcount"><span class="lz">5 则</span><span class="le">5 items</span></span>
         <span class="zname"><span class="lz">🤖 AI 资讯</span><span class="le">🤖 AI News</span></span>
         <span class="zen">AI News</span>
       </button>
@@ -1092,35 +1102,44 @@
     </section>
 
     <!-- ============ 专区：AI 资讯 ============ -->
-    <section class="zone" id="zone-ai" data-zname="AI 资讯">
+    <!-- ============ 专区：搞钱 ============ -->
+    <section class="zone" id="zone-earn" data-zname="搞钱专区">
       <div class="zone-head">
-        <h3><span class="lz">🤖 AI <span class="acc">资讯</span></span><span class="le">🤖 AI News</span></h3>
-        <p class="zone-sub"><span class="lz">模型同工具嘅新动向——纯资讯，睇完就算跟上。</span><span class="le">New models and tools — pure intel; read it and you are up to speed.</span></p>
+        <h3><span class="lz">🏆 搞钱<span class="acc">专区</span></span><span class="le">🏆 Earn</span></h3>
+        <p class="zone-sub"><span class="lz">比赛、悬赏、黑客松同有奖任务——奖金同规则核实过先上架。</span><span class="le">Contests, bounties, hackathons and paid tasks — prizes and rules verified before listing.</span></p>
       </div>
       <div class="deckbar">
-        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">39</span><span class="lz"> 则</span></span>
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">1</span><span class="lz"> 则</span></span>
         <span class="dots"></span>
       </div>
       <div class="deck">
-        <!-- CARDS(ai): 新卡加喺第一张位置并写 data-date，占位卡之后可以抽走 -->
-        <article class="dcard" data-cls="a" data-date="2026-11-27">
-          <div class="card-top">
-            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
-            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
-            <span class="src">Anthropic 官方 · 2026-11-24</span>
+        <!-- CARDS(earn): 新卡加喺第一张位置并写 data-date，占位卡之后可以抽走 -->
+        <article class="dcard void">
+          <div>
+            <p class="big"><span class="lz">搞钱专区筹备中</span><span class="le">The Earn zone is on its way</span><span class="acc">.</span></p>
+            <p><span class="lz">比赛、悬赏、黑客松、agent 竞赛同有奖任务即将上架——每则都会核实奖金、规则同截止先至贴出嚟。</span><span class="le">Contests, bounties, hackathons, agent competitions and paid tasks are coming — every listing goes up only after its prize, rules and deadline are verified.</span></p>
+            <p class="mono">Stay tuned</p>
           </div>
-          <div class="idx">N<b>o.</b>060</div>
-          <h2><span class="lz">官方大发布｜<span class="acc">Skills over MCP</span> 公测：MCP server 自带操作手册</span><span class="le">Official Launch｜<span class="acc">Skills over MCP</span> Beta: Servers Now Ship Their Own Playbooks</span></h2>
-          <p class="hook"><span class="lz">Anthropic 在 MCP 两周年宣布：MCP server 可以随工具一起发布 skills，Claude 按需加载；同期 Tasks 与 Elicitation 转正式可用，File Uploads 即将推出。连接器从「给一张工具清单」变成「自带操作手册」，skill 随 server 更新，用户无需单独安装。</span><span class="le">Anthropic announced on MCP's second anniversary: MCP servers can now ship skills alongside their tools, loaded on demand by Claude. Tasks and Elicitation are generally available at the same time, with File Uploads rolling out soon. A connector goes from "a list of tools" to "a built-in playbook" — skills update with the server, no separate install needed.</span></p>
-          <dl class="facts">
-            <div class="fact"><dt><span class="lz">发布</span><span class="le">Release</span></dt><dd><span class="lz">2026-11-24 公测<small>Pro／Max／Ultra 默认开启，Team 需管理员打开</small></span><span class="le">Public beta, Nov 24<small>On by default for Pro / Max / Ultra; Team needs admin opt-in</small></span></dd></div>
-            <div class="fact"><dt><span class="lz">关键</span><span class="le">Key change</span></dt><dd><span class="lz">Elicitation 正式可用<small>删库、扣费等操作前必须停下来确认</small></span><span class="le">Elicitation is GA<small>Destructive or paid actions must pause for confirmation first</small></span></dd></div>
-            <div class="fact"><dt><span class="lz">注意</span><span class="le">Note</span></dt><dd><span class="lz">第三方目录连接器的 skill 会被扫描<small>自建 server 不扫描——只加可信 server</small></span><span class="le">Skills from third-party directories get scanned<small>Self-hosted servers are not — only add servers you trust</small></span></dd></div>
-          </dl>
-          <div class="spacer"></div>
-          <a class="cta" href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more" rel="noopener"><span class="lz">去看官方公告 →</span><span class="le">Read the official announcement →</span></a>
-          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more" rel="noopener">Anthropic 官方公告</a></p>
         </article>
+      </div>
+      <div class="decknav">
+        <button class="navbtn prevBtn" disabled><span class="lz">← 上一则</span><span class="le">← Prev</span></button>
+        <button class="navbtn primary nextBtn"><span class="lz">下一则 →</span><span class="le">Next →</span></button>
+      </div>
+    </section>
+
+    <!-- ============ 专区：AI 工具箱 ============ -->
+    <section class="zone" id="zone-tools" data-zname="AI 工具箱">
+      <div class="zone-head">
+        <h3><span class="lz">🧰 AI <span class="acc">工具箱</span></span><span class="le">🧰 AI Toolbox</span></h3>
+        <p class="zone-sub"><span class="lz">Skills、MCP、生图 prompt 同开源工具——攞嚟即刻用得嘅家伙。</span><span class="le">Skills, MCP servers, image prompts and open-source tools — gear you can put to work right away.</span></p>
+      </div>
+      <div class="deckbar">
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">34</span><span class="lz"> 则</span></span>
+        <span class="dots"></span>
+      </div>
+      <div class="deck">
+        <!-- CARDS(tools): 新卡加喺第一张位置并写 data-date，占位卡之后可以抽走 -->
         <article class="dcard" data-cls="b" data-date="2026-11-27">
           <div class="card-top">
             <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
@@ -1317,7 +1336,7 @@
           </dl>
           <div class="spacer"></div>
           <a class="cta" href="https://article.juejin.cn/post/7709818243503636534" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
-          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://article.juejin.cn/post/7709818243503636534" rel="noopener">掘金原文</a></p>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://article.juejin.cn/post/7709818243503636534" rel="noopener"><span class="lz">掘金原文</span><span class="le">Original on Juejin</span></a></p>
         </article>
         <article class="dcard" data-cls="b" data-date="2026-11-26">
           <div class="card-top">
@@ -1480,42 +1499,6 @@
           <div class="spacer"></div>
           <a class="cta" href="https://github.com/adonisleung/dumate/blob/main/image-prompts.md" rel="noopener"><span class="lz">去看模板全文 →</span><span class="le">Read the templates →</span></a>
           <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://github.com/adonisleung/dumate/blob/main/image-prompts.md" rel="noopener">dumate 仓库</a></p>
-        </article>
-        <article class="dcard" data-cls="a" data-date="2026-11-26">
-          <div class="card-top">
-            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
-            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
-            <span class="src">CSDN · 2026-11-26</span>
-          </div>
-          <div class="idx">N<b>o.</b>058</div>
-          <h2><span class="lz">腾讯新玩法｜<span class="acc">CodeBuddy Code 2.0</span>：Skills 机制打通小红书封面链路</span><span class="le">Tencent's New Play｜<span class="acc">CodeBuddy Code 2.0</span>: Skills Power a Xiaohongshu Cover Pipeline</span></h2>
-          <p class="hook"><span class="lz">腾讯版 Claude Code 由 2.0 起支持 Skills：目录放 SKILL.md，模型按描述自动 match 后执行。作者用佢喺终端跑通「主题 → 封面文案 → 调图像模型 → 重命名归档」嘅小红书封面链路，仓库已经开源。</span><span class="le">Tencent's Claude Code alternative supports Skills from 2.0: drop a SKILL.md in a directory and the model matches and runs it by description. The author used it to run a full Xiaohongshu cover pipeline — topic → cover copy → image model → rename and archive — and open-sourced the repo.</span></p>
-          <dl class="facts">
-            <div class="fact"><dt><span class="lz">来源</span><span class="le">Source</span></dt><dd><span class="lz">CSDN 原创文章（2026-11-24）<small>已核实页面可达、内容相符</small></span><span class="le">CSDN article, Nov 24<small>Reachability and content verified</small></span></dd></div>
-            <div class="fact"><dt><span class="lz">亮点</span><span class="le">Highlight</span></dt><dd><span class="lz">Skills 唔绑模型通道<small>迁去统一入口只需改 Base URL／Key／Model</small></span><span class="le">Skills aren't tied to a model channel<small>Switching endpoints only needs URL / Key / Model</small></span></dd></div>
-            <div class="fact"><dt><span class="lz">附带</span><span class="le">Also</span></dt><dd><span class="lz">配套仓库已开源 freestylefly/xiaohongshu-skills</span><span class="le">Companion repo open-sourced: freestylefly/xiaohongshu-skills</span></dd></div>
-          </dl>
-          <div class="spacer"></div>
-          <a class="cta" href="https://blog.csdn.net/weixin_42613017/article/details/171299914" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
-          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://blog.csdn.net/weixin_42613017/article/details/171299914" rel="noopener">CSDN 原文</a></p>
-        </article>
-        <article class="dcard" data-cls="a" data-date="2026-11-26">
-          <div class="card-top">
-            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
-            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
-            <span class="src">腾讯云开发者社区 · 2026-11-26</span>
-          </div>
-          <div class="idx">N<b>o.</b>059</div>
-          <h2><span class="lz">腾讯云梳理｜<span class="acc">WorkBuddy</span>：技能、专家、专家团点配先啱</span><span class="le">Tencent Cloud Explainer｜<span class="acc">WorkBuddy</span>: How Skills, Experts and Expert Teams Fit</span></h2>
-          <p class="hook"><span class="lz">官方文档口径梳理：技能＝点做，专家＝边个做／按咩标准，专家团＝边个分工点协作。结论系「先谂任务、再去装、用边个开边个」——一次装二三十个技能会变慢，简单任务都绕远路。</span><span class="le">A walkthrough in the official docs' own terms: a skill is how, an expert is who and by what standard, an expert team is who divides the work. The takeaway: think about the task first, then install, and only switch on what you use — installing twenty or thirty skills at once slows everything down.</span></p>
-          <dl class="facts">
-            <div class="fact"><dt><span class="lz">来源</span><span class="le">Source</span></dt><dd><span class="lz">腾讯云开发者社区<small>已核实页面可达、内容相符</small></span><span class="le">Tencent Cloud Developer Community<small>Reachability and content verified</small></span></dd></div>
-            <div class="fact"><dt><span class="lz">观察</span><span class="le">Takeaway</span></dt><dd><span class="lz">同类技能互相试错<small>适合俾团队定安装纪律</small></span><span class="le">Similar skills trip over each other<small>Useful for setting team install rules</small></span></dd></div>
-            <div class="fact"><dt><span class="lz">形式</span><span class="le">Form</span></dt><dd><span class="lz">概念梳理文章</span><span class="le">Concept explainer article</span></dd></div>
-          </dl>
-          <div class="spacer"></div>
-          <a class="cta" href="https://cloud.tencent.com/developer/article/2792204" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
-          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://cloud.tencent.com/developer/article/2792204" rel="noopener">腾讯云开发者社区</a></p>
         </article>
         <article class="dcard" data-cls="b" data-date="2026-11-26">
           <div class="card-top">
@@ -1715,24 +1698,6 @@
           <a class="cta" href="https://skillhub.cn/skills/beatra-ai/hot-topic-content-maker" rel="noopener"><span class="lz">去 SkillHub 看 →</span><span class="le">View on SkillHub →</span></a>
           <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://skillhub.cn/skills/beatra-ai/hot-topic-content-maker" rel="noopener">腾讯 SkillHub</a></p>
         </article>
-        <article class="dcard" data-cls="a" data-date="2026-11-26">
-          <div class="card-top">
-            <span class="badge partial"><span class="lz">⚠️ 部分未核实</span><span class="le">⚠️ Partly unverified</span></span>
-            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
-            <span class="src">什么值得买 · 2026-11-26</span>
-          </div>
-          <div class="idx">N<b>o.</b>048</div>
-          <h2><span class="lz">榜单观察｜<span class="acc">skills.sh 安装榜</span>：头部全是「防添乱」技能</span><span class="le">Chart Watch｜<span class="acc">The skills.sh Install Chart</span>: Top Skills Are Guardrails</span></h2>
-          <p class="hook"><span class="lz">技能安装榜很说明问题：榜首 find-skills 累计约 451 万次安装，其后是 grill-me（反复追问需求）、tdd、handoff、triage——大家最需要的不是神技，是少让 AI 添乱。</span><span class="le">The install chart tells a story: find-skills tops it with ~4.51M installs, followed by grill-me (relentless requirement questions), tdd, handoff and triage — what people need most is not magic, but fewer AI messes.</span></p>
-          <dl class="facts">
-            <div class="fact"><dt><span class="lz">数据</span><span class="le">Data</span></dt><dd><span class="lz">安装量为来源文章口径<small>什么值得买转述，未独立核实</small></span><span class="le">Install counts as reported by the source article<small>Via SMZDM, not independently verified</small></span></dd></div>
-            <div class="fact"><dt><span class="lz">榜首</span><span class="le">Top</span></dt><dd><span class="lz">find-skills 约 451 万次安装</span><span class="le">find-skills, ~4.51M installs</span></dd></div>
-            <div class="fact"><dt><span class="lz">观察</span><span class="le">Takeaway</span></dt><dd><span class="lz">头部均为基础能力类技能</span><span class="le">The top of the chart is all foundational skills</span></dd></div>
-          </dl>
-          <div class="spacer"></div>
-          <a class="cta" href="https://post.smzdm.com/p/apqrdpo0/" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
-          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://post.smzdm.com/p/apqrdpo0/" rel="noopener">什么值得买原文</a></p>
-        </article>
         <article class="dcard" data-cls="b" data-date="2026-11-26">
           <div class="card-top">
             <span class="badge ok">✅ 已核实</span>
@@ -1769,6 +1734,103 @@
           <a class="cta" href="https://github.com/xcl-dev/xcl" rel="noopener">去 GitHub 睇 →</a>
           <p class="origin">一手来源：<a href="https://github.com/xcl-dev/xcl" rel="noopener">GitHub 仓库页</a></p>
         </article>
+        <article class="dcard end">
+          <div>
+            <p class="big"><span class="lz">本区今轮睇完</span><span class="le">That is everything in this zone</span><span class="acc">.</span></p>
+            <p class="lz">新工具、新技能核实好<br>会即刻补入嚟</p><p class="le">New tools and skills<br>will land here once verified</p>
+            <p class="mono">Stay tuned</p>
+          </div>
+        </article>
+      </div>
+      <div class="decknav">
+        <button class="navbtn prevBtn" disabled><span class="lz">← 上一则</span><span class="le">← Prev</span></button>
+        <button class="navbtn primary nextBtn"><span class="lz">下一则 →</span><span class="le">Next →</span></button>
+      </div>
+    </section>
+
+    <section class="zone" id="zone-ai" data-zname="AI 资讯">
+      <div class="zone-head">
+        <h3><span class="lz">🤖 AI <span class="acc">资讯</span></span><span class="le">🤖 AI News</span></h3>
+        <p class="zone-sub"><span class="lz">模型发布同行业新动向——纯资讯，睇完就算跟上。</span><span class="le">New models and industry moves — pure intel; read it and you are up to speed.</span></p>
+      </div>
+      <div class="deckbar">
+        <span class="counter"><span class="lz">第 </span><span class="le">Card </span><b class="cur">1</b><span class="lz"> 则 / 共 </span><span class="le"> of </span><span class="total">6</span><span class="lz"> 则</span></span>
+        <span class="dots"></span>
+      </div>
+      <div class="deck">
+        <!-- CARDS(ai): 新卡加喺第一张位置并写 data-date，占位卡之后可以抽走 -->
+        <article class="dcard" data-cls="a" data-date="2026-11-27">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
+            <span class="src">Anthropic 官方 · 2026-11-24</span>
+          </div>
+          <div class="idx">N<b>o.</b>060</div>
+          <h2><span class="lz">官方大发布｜<span class="acc">Skills over MCP</span> 公测：MCP server 自带操作手册</span><span class="le">Official Launch｜<span class="acc">Skills over MCP</span> Beta: Servers Now Ship Their Own Playbooks</span></h2>
+          <p class="hook"><span class="lz">Anthropic 在 MCP 两周年宣布：MCP server 可以随工具一起发布 skills，Claude 按需加载；同期 Tasks 与 Elicitation 转正式可用，File Uploads 即将推出。连接器从「给一张工具清单」变成「自带操作手册」，skill 随 server 更新，用户无需单独安装。</span><span class="le">Anthropic announced on MCP's second anniversary: MCP servers can now ship skills alongside their tools, loaded on demand by Claude. Tasks and Elicitation are generally available at the same time, with File Uploads rolling out soon. A connector goes from "a list of tools" to "a built-in playbook" — skills update with the server, no separate install needed.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">发布</span><span class="le">Release</span></dt><dd><span class="lz">2026-11-24 公测<small>Pro／Max／Ultra 默认开启，Team 需管理员打开</small></span><span class="le">Public beta, Nov 24<small>On by default for Pro / Max / Ultra; Team needs admin opt-in</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">关键</span><span class="le">Key change</span></dt><dd><span class="lz">Elicitation 正式可用<small>删库、扣费等操作前必须停下来确认</small></span><span class="le">Elicitation is GA<small>Destructive or paid actions must pause for confirmation first</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">注意</span><span class="le">Note</span></dt><dd><span class="lz">第三方目录连接器的 skill 会被扫描<small>自建 server 不扫描——只加可信 server</small></span><span class="le">Skills from third-party directories get scanned<small>Self-hosted servers are not — only add servers you trust</small></span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more" rel="noopener"><span class="lz">去看官方公告 →</span><span class="le">Read the official announcement →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://claude.com/resources/articles/skills-over-mcp-tasks-and-more" rel="noopener">Anthropic 官方公告</a></p>
+        </article>
+        <article class="dcard" data-cls="a" data-date="2026-11-26">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
+            <span class="src">CSDN · 2026-11-26</span>
+          </div>
+          <div class="idx">N<b>o.</b>058</div>
+          <h2><span class="lz">腾讯新玩法｜<span class="acc">CodeBuddy Code 2.0</span>：Skills 机制打通小红书封面链路</span><span class="le">Tencent's New Play｜<span class="acc">CodeBuddy Code 2.0</span>: Skills Power a Xiaohongshu Cover Pipeline</span></h2>
+          <p class="hook"><span class="lz">腾讯版 Claude Code 由 2.0 起支持 Skills：目录放 SKILL.md，模型按描述自动 match 后执行。作者用佢喺终端跑通「主题 → 封面文案 → 调图像模型 → 重命名归档」嘅小红书封面链路，仓库已经开源。</span><span class="le">Tencent's Claude Code alternative supports Skills from 2.0: drop a SKILL.md in a directory and the model matches and runs it by description. The author used it to run a full Xiaohongshu cover pipeline — topic → cover copy → image model → rename and archive — and open-sourced the repo.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">来源</span><span class="le">Source</span></dt><dd><span class="lz">CSDN 原创文章（2026-11-24）<small>已核实页面可达、内容相符</small></span><span class="le">CSDN article, Nov 24<small>Reachability and content verified</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">亮点</span><span class="le">Highlight</span></dt><dd><span class="lz">Skills 唔绑模型通道<small>迁去统一入口只需改 Base URL／Key／Model</small></span><span class="le">Skills aren't tied to a model channel<small>Switching endpoints only needs URL / Key / Model</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">附带</span><span class="le">Also</span></dt><dd><span class="lz">配套仓库已开源 freestylefly/xiaohongshu-skills</span><span class="le">Companion repo open-sourced: freestylefly/xiaohongshu-skills</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://blog.csdn.net/weixin_42613017/article/details/171299914" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://blog.csdn.net/weixin_42613017/article/details/171299914" rel="noopener">CSDN 原文</a></p>
+        </article>
+        <article class="dcard" data-cls="a" data-date="2026-11-26">
+          <div class="card-top">
+            <span class="badge ok"><span class="lz">✅ 已核实</span><span class="le">✅ Verified</span></span>
+            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
+            <span class="src">腾讯云开发者社区 · 2026-11-26</span>
+          </div>
+          <div class="idx">N<b>o.</b>059</div>
+          <h2><span class="lz">腾讯云梳理｜<span class="acc">WorkBuddy</span>：技能、专家、专家团点配先啱</span><span class="le">Tencent Cloud Explainer｜<span class="acc">WorkBuddy</span>: How Skills, Experts and Expert Teams Fit</span></h2>
+          <p class="hook"><span class="lz">官方文档口径梳理：技能＝点做，专家＝边个做／按咩标准，专家团＝边个分工点协作。结论系「先谂任务、再去装、用边个开边个」——一次装二三十个技能会变慢，简单任务都绕远路。</span><span class="le">A walkthrough in the official docs' own terms: a skill is how, an expert is who and by what standard, an expert team is who divides the work. The takeaway: think about the task first, then install, and only switch on what you use — installing twenty or thirty skills at once slows everything down.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">来源</span><span class="le">Source</span></dt><dd><span class="lz">腾讯云开发者社区<small>已核实页面可达、内容相符</small></span><span class="le">Tencent Cloud Developer Community<small>Reachability and content verified</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">观察</span><span class="le">Takeaway</span></dt><dd><span class="lz">同类技能互相试错<small>适合俾团队定安装纪律</small></span><span class="le">Similar skills trip over each other<small>Useful for setting team install rules</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">形式</span><span class="le">Form</span></dt><dd><span class="lz">概念梳理文章</span><span class="le">Concept explainer article</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://cloud.tencent.com/developer/article/2792204" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://cloud.tencent.com/developer/article/2792204" rel="noopener">腾讯云开发者社区</a></p>
+        </article>
+        <article class="dcard" data-cls="a" data-date="2026-11-26">
+          <div class="card-top">
+            <span class="badge partial"><span class="lz">⚠️ 部分未核实</span><span class="le">⚠️ Partly unverified</span></span>
+            <span class="cls"><span class="lz">📰 甲类 · 纯资讯</span><span class="le">📰 Intel only</span></span>
+            <span class="src">什么值得买 · 2026-11-26</span>
+          </div>
+          <div class="idx">N<b>o.</b>048</div>
+          <h2><span class="lz">榜单观察｜<span class="acc">skills.sh 安装榜</span>：头部全是「防添乱」技能</span><span class="le">Chart Watch｜<span class="acc">The skills.sh Install Chart</span>: Top Skills Are Guardrails</span></h2>
+          <p class="hook"><span class="lz">技能安装榜很说明问题：榜首 find-skills 累计约 451 万次安装，其后是 grill-me（反复追问需求）、tdd、handoff、triage——大家最需要的不是神技，是少让 AI 添乱。</span><span class="le">The install chart tells a story: find-skills tops it with ~4.51M installs, followed by grill-me (relentless requirement questions), tdd, handoff and triage — what people need most is not magic, but fewer AI messes.</span></p>
+          <dl class="facts">
+            <div class="fact"><dt><span class="lz">数据</span><span class="le">Data</span></dt><dd><span class="lz">安装量为来源文章口径<small>什么值得买转述，未独立核实</small></span><span class="le">Install counts as reported by the source article<small>Via SMZDM, not independently verified</small></span></dd></div>
+            <div class="fact"><dt><span class="lz">榜首</span><span class="le">Top</span></dt><dd><span class="lz">find-skills 约 451 万次安装</span><span class="le">find-skills, ~4.51M installs</span></dd></div>
+            <div class="fact"><dt><span class="lz">观察</span><span class="le">Takeaway</span></dt><dd><span class="lz">头部均为基础能力类技能</span><span class="le">The top of the chart is all foundational skills</span></dd></div>
+          </dl>
+          <div class="spacer"></div>
+          <a class="cta" href="https://post.smzdm.com/p/apqrdpo0/" rel="noopener"><span class="lz">去看原文 →</span><span class="le">Read the article →</span></a>
+          <p class="origin"><span class="lz">一手来源：</span><span class="le">First-hand source: </span><a href="https://post.smzdm.com/p/apqrdpo0/" rel="noopener">什么值得买原文</a></p>
+        </article>
         <article class="dcard" data-cls="a" data-date="2026-11-26">
           <div class="card-top">
             <span class="badge partial">⚠️ 部分未核实</span>
@@ -1791,7 +1853,7 @@
         <article class="dcard end">
           <div>
             <p class="big"><span class="lz">本区今轮睇完</span><span class="le">That is everything in this zone</span><span class="acc">.</span></p>
-            <p class="lz">新模型、新工具一有动向<br>核实好会即刻补入嚟</p><p class="le">New models and tools<br>will land here once verified</p>
+            <p class="lz">新模型、新发布一有动向<br>核实好会即刻补入嚟</p><p class="le">New models and launches<br>will land here once verified</p>
             <p class="mono">Stay tuned</p>
           </div>
         </article>
@@ -1995,7 +2057,7 @@
       first.el.classList.remove('flash');
       void first.el.offsetWidth;
       first.el.classList.add('flash');
-      var zonesTxt = hits.map(function (h) { return window.__zdfLang === 'en' ? ({ hot: 'Must Not Miss', games: 'Games', deals: 'Freebies & Deals', ai: 'AI News' })[h.zoneId] || h.zoneName : h.zoneName; })
+      var zonesTxt = hits.map(function (h) { return window.__zdfLang === 'en' ? ({ hot: 'Must Not Miss', games: 'Games', deals: 'Freebies & Deals', earn: 'Earn', tools: 'AI Toolbox', ai: 'AI News' })[h.zoneId] || h.zoneName : h.zoneName; })
         .filter(function (v, i, a) { return a.indexOf(v) === i; }).join(window.__zdfLang === 'en' ? ', ' : '、');
       dbStatus.innerHTML = window.__zdfLang === 'en'
         ? '📅 <b>' + label + '</b> ' + hits.length + (hits.length === 1 ? ' card' : ' cards') + ' in ' + zonesTxt + ' — jumped to the first one.'
